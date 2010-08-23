@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Controllers
+END
+b2ConstantAccelController.h
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Controllers/b2ConstantAccelController.h
+END
+b2ConstantForceController.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Controllers/b2ConstantForceController.cpp
+END
+b2BuoyancyController.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Controllers/b2BuoyancyController.cpp
+END
+b2TensorDampingController.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Controllers/b2TensorDampingController.cpp
+END
+b2GravityController.h
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Controllers/b2GravityController.h
+END
+b2ConstantForceController.h
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Controllers/b2ConstantForceController.h
+END
+b2BuoyancyController.h
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Controllers/b2BuoyancyController.h
+END
+b2TensorDampingController.h
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Controllers/b2TensorDampingController.h
+END
+b2Controller.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Controllers/b2Controller.cpp
+END
+b2ConstantAccelController.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Controllers/b2ConstantAccelController.cpp
+END
+b2Controller.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Controllers/b2Controller.h
+END
+b2GravityController.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Controllers/b2GravityController.cpp
+END

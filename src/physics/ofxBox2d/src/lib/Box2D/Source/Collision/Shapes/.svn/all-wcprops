@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Collision/Shapes
+END
+b2EdgeShape.h
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Collision/Shapes/b2EdgeShape.h
+END
+b2PolygonShape.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Collision/Shapes/b2PolygonShape.h
+END
+b2Shape.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Collision/Shapes/b2Shape.cpp
+END
+b2CircleShape.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Collision/Shapes/b2CircleShape.cpp
+END
+b2EdgeShape.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Collision/Shapes/b2EdgeShape.cpp
+END
+b2Shape.h
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Collision/Shapes/b2Shape.h
+END
+b2CircleShape.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Collision/Shapes/b2CircleShape.h
+END
+b2PolygonShape.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Collision/Shapes/b2PolygonShape.cpp
+END

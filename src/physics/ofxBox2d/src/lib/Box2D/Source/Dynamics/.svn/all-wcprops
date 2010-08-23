@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics
+END
+b2Island.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/b2Island.cpp
+END
+b2ContactManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/b2ContactManager.h
+END
+b2WorldCallbacks.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/b2WorldCallbacks.h
+END
+b2World.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/b2World.h
+END
+b2Body.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/b2Body.cpp
+END
+b2Island.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/b2Island.h
+END
+b2Body.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/b2Body.h
+END
+b2ContactManager.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/b2ContactManager.cpp
+END
+b2WorldCallbacks.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/b2WorldCallbacks.cpp
+END
+b2World.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/b2World.cpp
+END

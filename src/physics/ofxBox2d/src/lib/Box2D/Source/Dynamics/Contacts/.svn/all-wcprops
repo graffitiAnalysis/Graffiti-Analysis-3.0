@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts
+END
+b2PolyAndEdgeContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2PolyAndEdgeContact.h
+END
+b2CircleContact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2CircleContact.cpp
+END
+b2CircleContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2CircleContact.h
+END
+b2EdgeAndCircleContact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2EdgeAndCircleContact.cpp
+END
+b2ContactSolver.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2ContactSolver.cpp
+END
+b2EdgeAndCircleContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2EdgeAndCircleContact.h
+END
+b2ContactSolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2ContactSolver.h
+END
+b2Contact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2Contact.cpp
+END
+b2NullContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2NullContact.h
+END
+b2PolyContact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2PolyContact.cpp
+END
+b2Contact.h
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2Contact.h
+END
+b2PolyAndCircleContact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2PolyAndCircleContact.cpp
+END
+b2PolyContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2PolyContact.h
+END
+b2PolyAndEdgeContact.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2PolyAndEdgeContact.cpp
+END
+b2PolyAndCircleContact.h
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/!svn/ver/78/trunk/openframeworks/addons/ofxBox2d/src/lib/Box2D/Source/Dynamics/Contacts/b2PolyAndCircleContact.h
+END
