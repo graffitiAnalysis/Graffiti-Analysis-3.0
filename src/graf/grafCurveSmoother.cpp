@@ -19,9 +19,14 @@ grafCurveSmoother::~grafCurveSmoother()
 void grafCurveSmoother::smoothTag( int resolution, grafTagMulti * src )
 {
     
+	//tempTag.copyTagParams(src);
 	tempTag.clear();
 	tempTag.z_const = src->z_const;
 	tempTag.minPtDist = src->minPtDist;
+	tempTag.rotation=src->rotation;
+	tempTag.position=src->position;
+	tempTag.rotation_o=src->rotation_o;
+	tempTag.position_o=src->position_o;
 	
 	for( int i = 0; i < src->myStrokes.size(); i++)
 	{

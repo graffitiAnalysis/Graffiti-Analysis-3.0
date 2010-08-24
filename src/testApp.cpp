@@ -110,10 +110,14 @@ void testApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::audioReceived(float * input, int bufferSize, int nChannels){	
-	// samples are "interleaved"
-	if(grafInteractiveApp.audio.bSetup && grafInteractiveApp.bUseAudio)
+	
+	if( manager.mode == GA_MODE_PLAYER && grafInteractiveApp.bSetup)
 	{
-	memcpy(grafInteractiveApp.audio.audioInput, input, sizeof(float) * (NUM_BANDS));
-		grafInteractiveApp.audio.bufferCounter++;
+		// samples are "interleaved"
+		if(grafInteractiveApp.audio.bSetup && grafInteractiveApp.bUseAudio)
+		{
+			memcpy(grafInteractiveApp.audio.audioInput, input, sizeof(float) * (NUM_BANDS));
+			grafInteractiveApp.audio.bufferCounter++;
+		}
 	}
 }

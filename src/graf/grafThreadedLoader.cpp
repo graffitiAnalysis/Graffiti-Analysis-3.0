@@ -36,7 +36,9 @@ void GaThreadedLoader::start(){
 	
 	if (isThreadRunning() == false){
         bResponseReady = false;
-        startThread(false, false);   // blocking, verbose
+        nxtFileToLoad = filesToLoad[ totalLoaded ];
+		nxtFileName = filenames[ totalLoaded ];
+		startThread(false, false);   // blocking, verbose
     }
 
 }
@@ -50,12 +52,9 @@ void GaThreadedLoader::threadedFunction(){
     if( totalLoaded < totalToLoad )
 	{
 		
-		gIO.loadTag( filesToLoad[ totalLoaded ], &tags[ totalLoaded ]);
-		tags[ totalLoaded ].tagname = filenames[ totalLoaded ];
+		gIO.loadTag( nxtFileToLoad, &tags[ totalLoaded ]);
+		tags[ totalLoaded ].tagname = nxtFileName;
 		
-		smoother.smoothTag(4, &tags[ totalLoaded ]);
-		tags[totalLoaded].average();
-		tags[totalLoaded].average();
 		
 		totalLoaded++;
 	}
@@ -107,4 +106,11 @@ void GaThreadedLoader::getDirectoryInfo(string myTagDirectory)
 	totalToLoad = filesToLoad.size();
 	
 	tags = new grafTagMulti[totalToLoad];
+}
+
+
+string  GaThreadedLoader::getFileName(int index)
+{
+	if( index < totalLoaded ) return filesToLoad[ index ];
+	else return "";
 }

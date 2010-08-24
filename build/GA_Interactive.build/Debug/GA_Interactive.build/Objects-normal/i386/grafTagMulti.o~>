@@ -1,0 +1,8 @@
+/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafTagMulti.cpp: In constructor 'grafTagMulti::grafTagMulti()':
+/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafTagMulti.cpp:14: error: 'rotation_o' was not declared in this scope
+/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafTagMulti.cpp:15: error: 'position_o' was not declared in this scope
+/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafTagMulti.cpp: In copy constructor 'grafTagMulti::grafTagMulti(const grafTagMulti&)':
+/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafTagMulti.cpp:278: error: 'rotation_o' was not declared in this scope
+/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafTagMulti.cpp:278: error: 'const class grafTagMulti' has no member named 'rotation_o'
+/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafTagMulti.cpp:279: error: 'position_o' was not declared in this scope
+/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafTagMulti.cpp:279: error: 'const class grafTagMulti' has no member named 'position_o'

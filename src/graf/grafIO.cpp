@@ -63,16 +63,19 @@ void grafIO::loadTag(string gmlFile, grafTagMulti * tag)
 		up.y = xml.getValue("up:y", -1);
 		up.z = xml.getValue("up:z", 0);
 		
-		tag->position.x = xml.getValue("offset:x", 0);
-		tag->position.y = xml.getValue("offset:y", 0);
-		tag->position.z = xml.getValue("offset:z", 1);
+		tag->position.x = xml.getValue("offset:x", 0.f);
+		tag->position.y = xml.getValue("offset:y", 0.f);
+		tag->position.z = xml.getValue("offset:z", 1.f);
 		
 		// check that z not == 0
 		if(tag->position.z == 0 ) tag->position.z = 1;
 		
-		tag->rotation.x = xml.getValue("rotation:x", 0);
-		tag->rotation.y = xml.getValue("rotation:y", 0);
-		tag->rotation.z = xml.getValue("rotation:z", 0);
+		tag->rotation.x = xml.getValue("rotation:x", 0.f);
+		tag->rotation.y = xml.getValue("rotation:y", 0.f);
+		tag->rotation.z = xml.getValue("rotation:z", 0.f);
+		
+		tag->rotation_o = tag->rotation;
+		tag->position_o = tag->position;
 		
 		xml.popTag();
 	}
@@ -106,7 +109,12 @@ void grafIO::loadTag(string gmlFile, grafTagMulti * tag)
 						pt.y = 1-px;
 					}
 					
-					float t = xml.getValue("pt:time", 0.0, j);
+					// time vs t
+					float t = -1;
+					
+					t = xml.getValue("pt:time", -1.0, j);
+					if( t < 0 )
+						t = xml.getValue("pt:t", 0.0, j);
 					
 					tag->addNewPoint( pt, -1, -1, t, false);
 

@@ -74,11 +74,13 @@ class GrafPlayerApp{
 		void updateTransition( int type);
 		void updateAudio();
 		void updateArchitecture();
+		void updateZDepth(float z_const);
 		
 		//---- tag loading
 		void preLoadTags();
 		void loadTags();
 		void saveTagPositions();
+		void saveAllTagPositions();
 	
 		//---- tag playback management
 		void resetPlayer(int next);
@@ -120,7 +122,10 @@ class GrafPlayerApp{
 		//---------- gml tags
 		vector<grafTagMulti> tags;						// vector of all loaded tags
 		int currentTagID;								// id of the current tag being played 
-
+		float	z_const;
+		bool	bUseGlobalZ;
+		int		lastUpdatedZ;
+		
 		//---------- player to animate the tag 
 		grafPlayer	myTagPlayer;						// manages playback of tag in time
 		

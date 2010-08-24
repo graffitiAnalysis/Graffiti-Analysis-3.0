@@ -65,6 +65,9 @@ void GrafPlayerApp::setup(){
 	rotationY		= -45;
 	tagMoveForce	= .1;
 	tagPosVel.set(0,0,0);
+	z_const			= 16;
+	bUseGlobalZ		= false;
+	lastUpdatedZ	= -1;
 	
 	fontSS.loadFont("fonts/frabk.ttf",9);
 	fontS.loadFont("fonts/frabk.ttf",14);
@@ -166,6 +169,7 @@ void GrafPlayerApp::update(){
 		else if ( !myTagPlayer.bPaused && myTagPlayer.bDonePlaying && (drawer.alpha > 0 || particleDrawer.alpha > 0))			  		
 		{
 			updateTransition(0);
+			bTrans = true;
 		}
 		else if (  !myTagPlayer.bPaused && myTagPlayer.bDonePlaying )							
 		{
@@ -194,6 +198,12 @@ void GrafPlayerApp::update(){
 		
 		tagPosVel.x -= .1*tagPosVel.x;
 		tagPosVel.y -= .1*tagPosVel.y;
+		
+		if(!bTrans)
+		{
+		tags[currentTagID].rotation_o = tags[currentTagID].rotation;
+		tags[currentTagID].position_o = tags[currentTagID].position;
+		}
 
 	}
 	
@@ -259,6 +269,10 @@ void GrafPlayerApp::updateTransition( int type)
 			float pct = 1 - ((ofGetElapsedTimef()-rotFixTime) / 45.f);
 			rotationY = pct*rotationY + (1-pct)*(0);
 			
+			tags[currentTagID].rotation.x = pct*tags[currentTagID].rotation.x + (1-pct)*(0);
+			tags[currentTagID].rotation.y = pct*tags[currentTagID].rotation.y  + (1-pct)*(0);
+			tags[currentTagID].rotation.z = pct*tags[currentTagID].rotation.z + (1-pct)*(0);
+			
 			if( pct < .9 && !archPhysics.bMakingParticles) 
 				archPhysics.turnOnParticleBoxes(&particleDrawer.PS);
 
@@ -273,7 +287,6 @@ void GrafPlayerApp::updateTransition( int type)
 				if(particleDrawer.alpha  > 0 ) particleDrawer.alpha -= .5*dt;
 			}
 			
-			//if( bUseGravity ) particleDrawer.fall(dt);
 			
 		 }
 	
@@ -297,7 +310,7 @@ void GrafPlayerApp::updateTransition( int type)
 void GrafPlayerApp::updateAudio()
 {
 	if(panel.getValueB("use_p_size") ) 
-		particleDrawer.updateParticleSizes(audio.eqOutput,audio.averageVal, NUM_BANDS,panel.getValueF("particle_size_force") );
+		particleDrawer.updateParticleSizes(audio.ifftOutput,audio.averageVal, NUM_BANDS,panel.getValueF("particle_size_force") );
 	
 	particleDrawer.setDamping( panel.getValueF("P_DAMP") );
 	
@@ -345,6 +358,9 @@ void GrafPlayerApp::updateArchitecture()
 void GrafPlayerApp::drawTagNormal(){
 	
 	
+	
+	
+	
 	fbo.clear();
 	fbo.begin();
 	
@@ -358,12 +374,12 @@ void GrafPlayerApp::drawTagNormal(){
 
 	glPushMatrix();
 	
-	if( bUseFog )
+	/*if( bUseFog )
 	{
 		glFogf(GL_FOG_START, fogStart );
 		glFogf(GL_FOG_END, fogEnd );
 		glEnable(GL_FOG);				
-	}
+	}*/
 	
 	glTranslatef(screenW/2, screenH/2, 0);
 	glScalef(tags[currentTagID].position.z,tags[currentTagID].position.z,tags[currentTagID].position.z);
@@ -459,6 +475,9 @@ void GrafPlayerApp::drawTagNormal(){
 void GrafPlayerApp::draw(){
 
 	
+	screenW = ofGetWidth();
+	screenH = ofGetHeight();
+	
 	// architecture test image
 	if( mode == PLAY_MODE_LOAD )
 	{
@@ -468,7 +487,12 @@ void GrafPlayerApp::draw(){
 		if( tags.size() > 0 ) ofDrawBitmapString(tags[tags.size()-1].tagname, 200, 220);
 	}else if( mode == PLAY_MODE_PLAY )
 	{
-		ofSetColor(150,150,150,255);
+		if(fbo.texData.width != ofGetWidth())
+		{
+			fbo.allocate(ofGetWidth(),ofGetHeight());
+		}
+	
+			ofSetColor(150,150,150,255);
 		if( bUseArchitecture && panel.getValueB("show_image") )
 			archPhysics.drawTestImage();
 	
@@ -480,14 +504,17 @@ void GrafPlayerApp::draw(){
 			ofEnableAlphaBlending();
 			ofSetColor(255,255,255,255);
 			
-			if( modeDualScreen == GA_SCREENS_STACKED)
+			fbo.drawWarped(0, 0,screenW, screenH,pWarper.u,pWarper.v,pWarper.num_x_sections,pWarper.num_y_sections);
+			fbo.drawWarped(screenW, 0,screenW, screenH,pWarper.u,pWarper.v,pWarper.num_x_sections,pWarper.num_y_sections);
+			
+			/*if( modeDualScreen == GA_SCREENS_STACKED)
 			{
 				fbo.draw(1024, 0,1024*2,768*2);
 				fbo.draw(1024*2, -768,1024*2,768*2);
 			}else{
 				fbo.drawWarped(0, 0,screenW, screenH,pWarper.u,pWarper.v,pWarper.num_x_sections,pWarper.num_y_sections);
 				fbo.drawWarped(screenW, 0,screenW, screenH,pWarper.u,pWarper.v,pWarper.num_x_sections,pWarper.num_y_sections);
-			}
+			}*/
 		
 		}else if( modeRender == GA_RMODE_RB )
 		{
@@ -802,6 +829,9 @@ void GrafPlayerApp::nextTag(int dir)
 		if(currentTagID < 0 ) currentTagID = tags.size()-1;
 	}
 		
+	tags[currentTagID].rotation = tags[currentTagID].rotation_o;
+	tags[currentTagID].position = tags[currentTagID].position_o;
+	
 	drawer.resetTransitions();
 	rotFixTime = 0;
 	archPhysics.reset();
@@ -819,6 +849,10 @@ void GrafPlayerApp::loadTags()
 			tags.push_back( grafTagMulti() );
 			int toLoad = tags.size()-1;
 			tags[ toLoad ] = threadedLoader.tags[ toLoad ];
+			smoother.smoothTag(4, &tags[ toLoad ]);
+			tags[toLoad].average();
+			tags[toLoad].average();
+			
 		}else if(threadedLoader.totalLoaded < threadedLoader.totalToLoad ){
 			threadedLoader.start();
 		}else{
@@ -898,19 +932,40 @@ void GrafPlayerApp::preLoadTags()
 }
 
 //--------------------------------------------------------------
+void GrafPlayerApp::saveAllTagPositions()
+{
+	if(currentTagID < 0) return;
+	if( !threadedLoader.bResponseReady ) return;
+	
+	for( int i = 0; i < tags.size(); i++)
+	{
+	ofxXmlSettings xml;
+	xml.loadFile( threadedLoader.getFileName(i) );
+	xml.setValue("GML:tag:environment:offset:x", tags[i].position_o.x );
+	xml.setValue("GML:tag:environment:offset:y", tags[i].position_o.y );
+	xml.setValue("GML:tag:environment:offset:z", tags[i].position_o.z );
+	xml.setValue("GML:tag:environment:rotation:x", tags[i].rotation_o.x );
+	xml.setValue("GML:tag:environment:rotation:y", tags[i].rotation_o.y );
+	xml.setValue("GML:tag:environment:rotation:z", tags[i].rotation_o.z );
+	xml.saveFile( threadedLoader.getFileName(i) );
+	}
+}
+
+//--------------------------------------------------------------
 void GrafPlayerApp::saveTagPositions()
 {
 	if(currentTagID < 0) return;
+	if( !threadedLoader.bResponseReady ) return;
 	
 	ofxXmlSettings xml;
-	xml.loadFile(filesToLoad[currentTagID] );
+	xml.loadFile( threadedLoader.getFileName(currentTagID) );
 	xml.setValue("GML:tag:environment:offset:x", tags[currentTagID].position.x );
 	xml.setValue("GML:tag:environment:offset:y", tags[currentTagID].position.y );
 	xml.setValue("GML:tag:environment:offset:z", tags[currentTagID].position.z );
 	xml.setValue("GML:tag:environment:rotation:x", tags[currentTagID].rotation.x );
 	xml.setValue("GML:tag:environment:rotation:y", tags[currentTagID].rotation.y );
 	xml.setValue("GML:tag:environment:rotation:z", tags[currentTagID].rotation.z );
-	xml.saveFile(filesToLoad[currentTagID] );
+	xml.saveFile(threadedLoader.getFileName(currentTagID) );
 }
 
 //--------------------------------------------------------------
@@ -938,6 +993,7 @@ void GrafPlayerApp::setupControlPanel()
 	panel.addToggle("Display time", "SHOW_TIME", true);
 	panel.addToggle("Save Tag Position/Rotation", "save_Tag_pos", false);
 	panel.addSlider("Eye Distance","eye_dist",5,0,20,false);
+	panel.addSlider("Change wait time","wait_time",30,0,120,true);
 	
 	//--- draw settings
 	panel.setWhichPanel("Draw Settings");
@@ -950,37 +1006,28 @@ void GrafPlayerApp::setupControlPanel()
 	panel.addSlider("Number Particles","P_NUM",1,0,4,true);
 	panel.addToggle("Use gravity", "USE_GRAVITY", true);
 	panel.addToggle("Use edge mask", "USE_MASK", false);
+	panel.addSlider("Z Depth","Z_DEPTH",16,0,50,false);
+	panel.addToggle("Apply to Z to all","Z_ALL",false);
 	
-	panel.addToggle("Use Fog", "USE_FOG", false);
-	panel.addSlider("Fog Start","FOG_START",fogStart,-2000,2000,true);
-	panel.addSlider("Fog End","FOG_END",fogEnd,-2000,2000,true);
 	
 	
 	//--- audio settings
 	panel.setWhichPanel("Audio Settings");
-	panel.addToggle("Open sound file", "open_sound_file", false);
 	panel.addSlider("Outward amp force","outward_amp_force",8,0,200,false);
 	panel.addSlider("Particle size force","particle_size_force",22,0,200,false);
 	panel.addSlider("Wave deform force","wave_deform_force",.25,0,2,false);
-	//panel.addSlider("line width force","line_width_force",.25,0,2,false);
 	panel.addSlider("Bounce force","bounce_force",.25,0,2,false);
-	panel.addSlider("Change wait time","wait_time",30,0,120,true);
 	panel.addSlider("Drop p threshold","drop_p_thresh",.1,0,2,false);
-	
-	//panel.addSlider("particle speed force","p_audio_damp",1,0,4,false);
-
 	// toggles to apply what to what...
 	panel.addToggle("Use particle amp", "use_p_amp", true);
 	panel.addToggle("Use particle size", "use_p_size", true);
-	//panel.addToggle("use particle speed", "use_p_damp", false);
 	panel.addToggle("Use wave deform", "use_wave_deform", true);
-	//panel.addToggle("Use line width amp", "use_line_width", false);
 	panel.addToggle("Use bounce", "use_bounce", true);
 	panel.addToggle("Use drop particel", "use_drop", true);
 
 	panel.setWhichPanel("Architecture Settings");
 	panel.addToggle("show drawing tool", "show_drawing_tool",false);
-	panel.addToggle("show image", "show_image",true);
+	//panel.addToggle("show image", "show_image",true);
 	panel.addSlider("mass","box_mass",1,0,20,false);
 	panel.addSlider("bounce","box_bounce",.53,0,2,false);
 	panel.addSlider("friction","box_friction",.41,0,2,false);
@@ -1003,7 +1050,6 @@ void GrafPlayerApp::setupControlPanel()
 	panel.loadSettings(pathToSettings+"appSettings.xml");
 	
 	updateControlPanel(true);
-	//panel.update();
 }
 //--------------------------------------------------------------
 void GrafPlayerApp::updateControlPanel(bool bUpdateAll)
@@ -1015,7 +1061,9 @@ void GrafPlayerApp::updateControlPanel(bool bUpdateAll)
 	bUseArchitecture = panel.getValueB("use_arch");
 	bUseRedBlue = panel.getValueB("use_rb");
 	
-	//if(!bUpdateAll && !panel.isMouseInPanel(lastX, lastY) ) return;
+	if(bUseRedBlue) modeRender = GA_RMODE_RB;
+	else modeRender = GA_RMODE_NORMAL;
+	
 	
 	if( panel.getSelectedPanelName() == "App Settings" || bUpdateAll)
 	{
@@ -1033,7 +1081,8 @@ void GrafPlayerApp::updateControlPanel(bool bUpdateAll)
 		if( panel.getValueB("save_Tag_pos") )
 		{
 			panel.setValueB("save_Tag_pos",false);
-			saveTagPositions();
+			//saveTagPositions();
+			saveAllTagPositions();
 		}
 
 
@@ -1053,35 +1102,40 @@ void GrafPlayerApp::updateControlPanel(bool bUpdateAll)
 		bUseMask = panel.getValueB("USE_MASK");
 		
 		
-		bUseFog = panel.getValueB("USE_FOG");
-		fogStart = panel.getValueI("FOG_START");
-		fogEnd = panel.getValueI("FOG_END");
+		//bUseFog = panel.getValueB("USE_FOG");
+		//fogStart = panel.getValueI("FOG_START");
+		//fogEnd = panel.getValueI("FOG_END");
 		
-		
+		bUseGlobalZ = panel.getValueB("Z_ALL");
+		if(bUseGlobalZ)
+		{
+			z_const = panel.getValueF("Z_DEPTH");
+			if(tags.size() > 0 && (lastUpdatedZ != currentTagID || tags[currentTagID].z_const != z_const) )
+			{
+			updateZDepth(z_const);
+			lastUpdatedZ = currentTagID;
+			}
+		}else{
+			if(tags.size() > 0)
+			{
+				if(lastUpdatedZ != currentTagID)
+				{
+					panel.setValueF("Z_DEPTH",tags[currentTagID].z_const);
+					z_const = panel.getValueF("Z_DEPTH");
+					lastUpdatedZ = currentTagID;
+					
+				}else if(tags[currentTagID].z_const != panel.getValueF("Z_DEPTH")){
+					updateZDepth(z_const);
+					z_const = panel.getValueF("Z_DEPTH");
+				}
+			}
+		}		
 	}
 	
 	if( bUseAudio && panel.getSelectedPanelName() == "Audio Settings" )
 	{
 	
 		audio.peakThreshold = panel.getValueF("drop_p_thresh");
-		
-		if( panel.getValueB("open_sound_file") )
-		{
-				panel.setValueB("open_sound_file", false); 
-					
-				char msg[] = {"please select a file"};
-				char msg2[] = {""};
-					
-				string result = dialog.getStringFromDialog(kDialogFile, msg, msg2);					
-				vector <string> checkDot = ofSplitString(result, ".");
-					
-				if(  checkDot.back() == "mp3" || checkDot.back() != "wav"  )
-				{
-					audio.music.loadSound(result);
-					//audio.music.play();
-				}
-		}
-	
 		audio.panel.show();
 	}else{
 		audio.panel.hide();
@@ -1249,4 +1303,17 @@ void GrafPlayerApp::loadScreenSettings()
 }
 
 
+void GrafPlayerApp::updateZDepth(float z_const)
+{
+	for( int i = 0; i < tags[ currentTagID ].myStrokes.size(); i++)
+	{
+		for( int j = 0; j < tags[ currentTagID ].myStrokes[i].pts.size(); j++)
+		{
+		
+		tags[ currentTagID ].myStrokes[i].pts[j].pos.z = ( tags[ currentTagID ].myStrokes[i].pts[j].time * 1000.f ) / z_const;
+		}
+	}
+	
+	drawer.alterZDepth(&tags[ currentTagID ]);
+}
 

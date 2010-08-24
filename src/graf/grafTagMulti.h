@@ -13,7 +13,7 @@ class grafTagMulti
         virtual ~grafTagMulti();
 
         grafTagMulti(  const grafTagMulti &  mom );
-
+		
 
 		void mouseDragged(ofMouseEventArgs& event);
 		void mousePressed(ofMouseEventArgs& event);
@@ -57,7 +57,9 @@ class grafTagMulti
 
 		// global tag draw params
 		ofPoint             rotation;
+		ofPoint             rotation_o;	// original rotation in cas changed for transistions
 		ofPoint             position;
+		ofPoint             position_o;
 		float               z_const;
 		float				drawScale;
 

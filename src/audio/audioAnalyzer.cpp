@@ -43,6 +43,7 @@ void AudioAnalyzer::setup(){
 	avgBands	= new float[numAvgBands];
 	
 	bufferCounter = 0;
+	averageVal = 0;
 	
 	// this describes a linear low pass filter
 	for(int i = 0; i < fft->getBinSize(); i++)
@@ -65,6 +66,20 @@ void AudioAnalyzer::setup(){
 //--------------------------------------------------------------
 void AudioAnalyzer::update(){
 
+	float rmsAmplitude  = 0;
+	
+	for (int i = 0; i < bufferSize; i++){
+		
+		//calculate the root mean square amplitude
+		rmsAmplitude += sqrt(audioInput[i]*audioInput[i]);
+		
+	}
+	
+	//now we need to get the average
+	rmsAmplitude /= (float)bufferSize;
+	averageVal = .1;//rmsAmplitude;
+	cout << "average Val " << averageVal << endl;
+	
 	fft->setSignal( audioInput );
 	
 	memcpy(fftOutput, fft->getAmplitude(), sizeof(float) * fft->getBinSize());
@@ -81,8 +96,10 @@ void AudioAnalyzer::update(){
 		blendfft[i] = .9*blendfft[i] + .1*ifftOutput[i];
 		
 	//aubio.processAudio(audioInput, NUM_BANDS);
-	
-	//averageVal = aubio.amplitude;
+	//for(int i = 0; i < bufferSize; i++)
+	//	averageVal += ifftOutput[i];
+	//averageVal = 1;//(float)bufferSize;
+	//aubio.amplitude;
 		
 	//stats_pitch.update(aubio.pitch);
 	
@@ -98,7 +115,7 @@ void AudioAnalyzer::draw(){
 
 	int plotHeight = 128;
 	
-	ofEnableAlphaBlending();
+	//ofEnableAlphaBlending();
 	
 	ofSetColor(0xffffff);
 	ofPushMatrix();
@@ -113,7 +130,7 @@ void AudioAnalyzer::draw(){
 	
 	
 	ofSetColor(255,0,0,200);
-	ofLine(0,-averageVal*plotHeight+plotHeight,fft->getBinSize(),-averageVal*plotHeight+plotHeight);
+	//ofLine(0,-averageVal*plotHeight+plotHeight,fft->getBinSize(),-averageVal*plotHeight+plotHeight);
 	ofSetColor(255,255,255,255);
 	
 	ofPushMatrix();
@@ -139,6 +156,8 @@ void AudioAnalyzer::draw(){
 	glTranslatef(0, plotHeight + 16, 0);
 	ofDrawBitmapString("Blend FFT Output", 0, 0);
 	plot(blendfft, fft->getSignalSize(), plotHeight / 2, 0);	
+	
+	
 	ofPopMatrix();
 	
 	//ofDrawBitmapString( "pitch is : " + ofToString((int)aubio.pitch) + "\namplitude is : " + ofToString(aubio.amplitude,3), 10,600);
@@ -212,7 +231,6 @@ void AudioAnalyzer::calculateAverageFFTBands(float * vals, int totalVals)
 		
 		average /= (float)numAvgBands;
 		avgBands[i] = average;
-		
 	}
 	
 }

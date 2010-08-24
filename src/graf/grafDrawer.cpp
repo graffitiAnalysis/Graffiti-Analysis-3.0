@@ -389,3 +389,22 @@ void grafDrawer::drawBoundingBox( ofPoint pmin, ofPoint pmax, ofPoint pcenter )
 	
 	
 }
+
+
+void grafDrawer::alterZDepth( grafTagMulti * myTag)
+{
+	for( int i = 0; i < myTag->myStrokes.size(); i++)
+	{
+		for( int j = 0; j < myTag->myStrokes[i].pts.size(); j++)
+		{
+			lines[i]->pts_l[j].z = myTag->myStrokes[i].pts[j].pos.z;	
+			lines[i]->pts_r[j].z = myTag->myStrokes[i].pts[j].pos.z;
+			
+			lines[i]->pts_lo[j].z = myTag->myStrokes[i].pts[j].pos.z;	
+			lines[i]->pts_ro[j].z = myTag->myStrokes[i].pts[j].pos.z;
+			
+			lines[i]->pts_lout[j].z = myTag->myStrokes[i].pts[j].pos.z;	
+			lines[i]->pts_rout[j].z = myTag->myStrokes[i].pts[j].pos.z;
+		}
+	}
+}

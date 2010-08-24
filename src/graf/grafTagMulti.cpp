@@ -11,6 +11,8 @@ grafTagMulti::grafTagMulti()
 
     rotation.set(0,0,0);
     position.set(0,0,1);
+	rotation_o.set(0,0,0);
+    position_o.set(0,0,1);
     z_const     = 12;//8;//4;//16.f;
 	
 	minPtDist = 0.005;//002;//025;
@@ -56,8 +58,7 @@ void grafTagMulti::clear(bool bAdddInitStroke)
 	
 	nPts = 0;
 
-	//rotation.set(0,0,0);
-    //position.set(0,0,1);
+
 }
 
 bool grafTagMulti::addNewPoint(ofPoint pt, float dist, float angle, float time, bool bAverage)
@@ -273,6 +274,8 @@ grafTagMulti::grafTagMulti( const grafTagMulti &  mom )
 	
 	rotation=mom.rotation;
 	position=mom.position;
+	rotation_o=mom.rotation_o;
+	position_o=mom.position_o;
 	z_const=mom.z_const;
 	drawScale=mom.drawScale;
 	
@@ -295,6 +298,8 @@ grafTagMulti::grafTagMulti( const grafTagMulti &  mom )
 
 	
 }
+
+
 
 void grafTagMulti::mouseDragged(ofMouseEventArgs& event)
 {

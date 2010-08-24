@@ -27,7 +27,8 @@ class grafDrawer
 		void setAlpha(float a);
 		void setLineScale( float val );
 	
-	
+		void alterZDepth( grafTagMulti * myTag);
+		
 		vector<grafLineDrawer *> lines;
 		
 		float alpha;
@@ -42,7 +43,7 @@ class grafDrawer
 		float prelimTransTime;	// time to play first transition (deform, amp etc.)
 		float flatTime;
 		
-	//	float prelimTransWait;
+		//	float prelimTransWait;
 		
     protected:
     private:

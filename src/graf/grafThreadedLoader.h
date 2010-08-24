@@ -24,7 +24,9 @@ class GaThreadedLoader : public ofxThread{
 		void setup(string dirPath);
 		void start();
 		void stop();
-	
+		
+		string getFileName(int index);
+		
 		bool bResponseReady;
 		int totalLoaded, totalToLoad;
 		grafTagMulti * tags;
@@ -42,6 +44,8 @@ class GaThreadedLoader : public ofxThread{
 		string					myTagDirectory;			// directory to load from (changeable in data/settings/directorySettings.xml
 		vector<string>			filesToLoad;			// list of all file paths
 		vector<string>			filenames;				// list of corresponding file names (sans .gml)
+		string					nxtFileToLoad;
+		string					nxtFileName;
 		
 		grafIO gIO;					// gml loader/saver
 		grafCurveSmoother smoother;						// adds points to smooth tag

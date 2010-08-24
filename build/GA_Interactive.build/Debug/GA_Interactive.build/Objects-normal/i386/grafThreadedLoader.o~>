@@ -1,0 +1,1 @@
+/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafThreadedLoader.cpp:113: error: no 'std::string GaThreadedLoader::getFileName(int)' member function declared in class 'GaThreadedLoader'

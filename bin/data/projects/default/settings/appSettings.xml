@@ -56,10 +56,10 @@
     <val_0>0.000000</val_0>
 </open_sound_file>
 <outward_amp_force>
-    <val_0>14.444445</val_0>
+    <val_0>7.777778</val_0>
 </outward_amp_force>
 <particle_size_force>
-    <val_0>87.777779</val_0>
+    <val_0>11.111112</val_0>
 </particle_size_force>
 <use_p_amp>
     <val_0>1.000000</val_0>
@@ -137,7 +137,7 @@
     <val_0>0.410000</val_0>
 </box_friction>
 <use_audio>
-    <val_0>0.000000</val_0>
+    <val_0>1.000000</val_0>
 </use_audio>
 <use_arch>
     <val_0>0.000000</val_0>
@@ -149,7 +149,7 @@
     <val_0>0.000000</val_0>
 </reset_warping>
 <use_drop>
-    <val_0>1.000000</val_0>
+    <val_0>0.000000</val_0>
 </use_drop>
 <toggle_fbo_preview>
     <val_0>0.000000</val_0>
@@ -158,8 +158,14 @@
     <val_0>0.000000</val_0>
 </save_Tag_pos>
 <use_rb>
-    <val_0>1.000000</val_0>
+    <val_0>0.000000</val_0>
 </use_rb>
 <eye_dist>
     <val_0>5.000000</val_0>
 </eye_dist>
+<Z_DEPTH>
+    <val_0>16.000000</val_0>
+</Z_DEPTH>
+<Z_ALL>
+    <val_0>0.000000</val_0>
+</Z_ALL>

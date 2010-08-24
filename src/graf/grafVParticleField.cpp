@@ -154,7 +154,7 @@ void grafVParticleField::updateParticleSizes(float * vals, float averageVal, int
 		float force = PS.psize * ( 1 +  (vals[ps] * maxScale) );//+  (vals[ps] * maxScale) ) );
 		if(force!=force) force = 0;
 		PS.sizes[i] = .9*PS.sizes[i]+.1*force;//1 + maxScale * vals[ps];
-		
+		//if(PS.sizes[i] > 100) PS.sizes[i] = 100;
 	}
 	
 	
