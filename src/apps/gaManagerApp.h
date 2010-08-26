@@ -10,6 +10,14 @@
 #pragma once
 
 #include "ofMain.h"
+#include "polyEditable.h"
+#include "grafTagMulti.h"
+#include "grafTagMulti.h"
+#include "grafIO.h"
+#include "grafPlayer.h"
+#include "grafCurveSmoother.h"
+#include "grafDrawer.h"
+#include "grafVParticleField.h"
 
 #define	GA_MODE_RECORDER	0
 #define GA_MODE_PLAYER		1
@@ -29,9 +37,28 @@ class GaManagerApp{
 		
 		void setMode(int newMode){ mode = newMode; }
 		int getMode(){ return mode; }
-	
+		int hitTest(int x, int y);
+		
 		int mode;
 		
 	protected:
+	
+		ofImage	titleImage;
+		ofTrueTypeFont		fontS;					// fonts for drawing info to screen
+		ofTrueTypeFont		fontSS;					// fonts for drawing info to screen
 
+		vector<polyEditable> polyButtons;
+		int xp,yp;
+		
+		grafTagMulti			tag;
+		grafIO					gIO;					// gml loader/saver
+		grafCurveSmoother		smoother;				// adds points to smooth tag
+		grafDrawer				drawer;					// draws thick time stroked line
+		grafVParticleField		particleDrawer;			// draws and animates particles
+		grafPlayer				myTagPlayer;			// manages playback of tag in time
+		float					rotationY;				// y rotation for current tag
+		int screenW, screenH;
+		
+		bool bSetSplashTag;
+		
 };

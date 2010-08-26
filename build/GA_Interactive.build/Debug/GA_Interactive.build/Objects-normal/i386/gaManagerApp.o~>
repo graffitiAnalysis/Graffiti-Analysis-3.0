@@ -1,3 +1,0 @@
-/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_Interactive_v0.1/src/apps/gaManagerApp.cpp: In constructor 'GaManagerApp::GaManagerApp()':
-/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_Interactive_v0.1/src/apps/gaManagerApp.cpp:14: error: 'mode' was not declared in this scope
-/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_Interactive_v0.1/src/apps/gaManagerApp.cpp:14: error: 'GA_MODE_START' was not declared in this scope

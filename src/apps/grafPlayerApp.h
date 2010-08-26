@@ -23,13 +23,12 @@
 #include "perspectiveWarper.h"
 
 #include "grafThreadedLoader.h"
+#include "grafConstants.h"
 
-#define TAG_DIRECTORY	"tags/"
-#define WARP_DIV	.125
+
 
 //#define GA_STACK_SCREENS
 
-enum{ PLAY_MODE_LOAD, PLAY_MODE_PLAY };
 enum{ GA_RMODE_NORMAL, GA_RMODE_RB};
 enum{ GA_SCREENS_NORMAL,GA_SCREENS_STACKED};
 
@@ -58,6 +57,9 @@ class GrafPlayerApp{
 	
 		void loadScreenSettings();
 		
+		void preLoadTags(int mode = 0);
+		int getNumTagsLoaded(){ return tags.size(); }
+	
 		//---------- audio analysis
 		AudioAnalyzer	audio;
 		
@@ -66,6 +68,9 @@ class GrafPlayerApp{
 		bool			bUseArchitecture;
 		bool			bUseRedBlue;
 		bool			bSetup;
+		
+		ofxControlPanel		panel;
+
 
 	protected:
 
@@ -77,7 +82,7 @@ class GrafPlayerApp{
 		void updateZDepth(float z_const);
 		
 		//---- tag loading
-		void preLoadTags();
+		//void preLoadTags();
 		void loadTags();
 		void saveTagPositions();
 		void saveAllTagPositions();
@@ -118,7 +123,8 @@ class GrafPlayerApp{
 		int						totalToLoad;			// totalFiles found to load
 		vector<string>			filesToLoad;			// list of all file paths
 		vector<string>			filenames;				// list of corresponding file names (sans .gml)
-	
+		string					loadStatus;
+		
 		//---------- gml tags
 		vector<grafTagMulti> tags;						// vector of all loaded tags
 		int currentTagID;								// id of the current tag being played 
@@ -157,7 +163,7 @@ class GrafPlayerApp{
 	
 
 		//---------- controls
-		ofxControlPanel		panel;
+		guiTypeTextInput	* rssTextBox;
 		bool				bShowPanel;			// toggle panel on/off
 		bool				bRotating;			// toggle auto rotation on/off
 		bool				bShowName;			// toggle filename displa

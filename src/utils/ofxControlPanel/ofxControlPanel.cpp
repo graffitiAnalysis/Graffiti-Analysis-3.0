@@ -465,7 +465,8 @@ void ofxControlPanel::addChar(char key,int whichParam)
 				int textW = ((guiTypeTextInput*)guiObjects[i])->valueText.stringWidth(nowStr);
 
 				if( textW  < guiObjects[i]->hitArea.width-10 ){
-					nowStr.push_back(key);
+					if( key == OF_KEY_BACKSPACE && nowStr.length() > 0 ) nowStr.erase(nowStr.length());
+					else nowStr.push_back(key);
 					guiObjects[i]->value.setValueAsStr(nowStr, whichParam);
 				}
                 return;
@@ -889,3 +890,23 @@ void ofxControlPanel::draw(){
 
 
 
+//---------------------------------------------
+bool ofxControlPanel::hasValueChanged(string xmlName, int whichParam){
+    for(int i = 0; i < (int) guiObjects.size(); i++){
+        if( guiObjects[i]->xmlName == xmlName){
+            if( whichParam >= 0  ){
+				return guiObjects[i]->value.hasValueChanged(whichParam);
+            }
+        }
+    }
+	return false;
+}
+
+//---------------------------------------------
+void ofxControlPanel::clearAllChanged(){
+	for(int i = 0; i < (int) guiObjects.size(); i++){
+		guiObjects[i]->value.clearChangedFlag();
+    }
+	
+	bNewPanelSelected = false;
+}

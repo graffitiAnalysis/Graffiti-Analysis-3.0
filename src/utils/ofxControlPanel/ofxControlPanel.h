@@ -42,6 +42,8 @@ class ofxControlPanel: public guiBaseObject{
         void setWhichPanel(string panelName);
         void setWhichColumn(int column);
 	
+		void clearAllChanged();
+	
 	
 		int getSelectedPanel(){  return selectedPanel; };
 		string getSelectedPanelName(){	
@@ -98,7 +100,8 @@ class ofxControlPanel: public guiBaseObject{
 		bool isAnyTextBoxActive();
 		bool isMouseInPanel(int x, int y);
 
-
+		bool hasValueChanged(string xmlName, int whichParam=0);
+		
         ofTrueTypeFont guiTTFFont;
 
         vector <xmlAssociation> xmlObjects;

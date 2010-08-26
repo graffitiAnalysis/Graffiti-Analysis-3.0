@@ -87,10 +87,6 @@ void GrafPlayerApp::setup(){
 	
 	if(panel.getValueB("use_rb") ) modeRender = GA_RMODE_RB;
 
-	// start threaded tag loading
-	threadedLoader.setup( ofToDataPath(myTagDirectory,true) );
-	totalToLoad = threadedLoader.totalToLoad;
-	
 	particleDrawer.setup(screenW,screenH);
 	
 	// fbo
@@ -105,12 +101,8 @@ void GrafPlayerApp::setup(){
 	pWarper.loadFromXml(pathToSettings+"warper.xml");
 	
 	// audio
-	//if(bUseAudio) 
 	audio.setup();
 	
-	// interactive architecture setup
-	//if(bUseArchitecture)
-	//{
 	#ifdef GA_STACK_SCREENS
 		archPhysics.setup(screenW,screenH);
 		archPhysics.floorH = screenH*2;
@@ -124,12 +116,12 @@ void GrafPlayerApp::setup(){
 		archPhysics.loadFromXML(pathToSettings+"architecture.xml");
 		createWarpedArchitecture();
 	}
-	//}
 	
 	// red blue stuff
 	fboLeft.allocate(screenW,screenH );
 	fboRight.allocate(screenW,screenH );
 	
+	loadStatus = "No tags loaded.";
 	
 	bSetup = true;
 	
@@ -364,7 +356,7 @@ void GrafPlayerApp::drawTagNormal(){
 	fbo.clear();
 	fbo.begin();
 	
-	if( mode == PLAY_MODE_PLAY )
+	if( mode == PLAY_MODE_PLAY && tags.size() > 0)
 	{
 	
 	glViewport(tags[currentTagID].position.x,-tags[currentTagID].position.y,fbo.texData.width,fbo.texData.height);
@@ -373,13 +365,6 @@ void GrafPlayerApp::drawTagNormal(){
 	ofSetColor(255,255,255,255);
 
 	glPushMatrix();
-	
-	/*if( bUseFog )
-	{
-		glFogf(GL_FOG_START, fogStart );
-		glFogf(GL_FOG_END, fogEnd );
-		glEnable(GL_FOG);				
-	}*/
 	
 	glTranslatef(screenW/2, screenH/2, 0);
 	glScalef(tags[currentTagID].position.z,tags[currentTagID].position.z,tags[currentTagID].position.z);
@@ -481,10 +466,12 @@ void GrafPlayerApp::draw(){
 	// architecture test image
 	if( mode == PLAY_MODE_LOAD )
 	{
-		ofDrawBitmapString("Loading: ", 200, 200);
-		ofDrawBitmapString(ofToString( (int)(tags.size()-1) ) + " of " + ofToString((totalToLoad-1)), 270, 200);
-		
-		if( tags.size() > 0 ) ofDrawBitmapString(tags[tags.size()-1].tagname, 200, 220);
+		ofDrawBitmapString(loadStatus, 200, 200);
+		if( tags.size() > 0 )
+		{
+			//ofDrawBitmapString(ofToString( (int)(tags.size()-1) ) + " of " + ofToString((totalToLoad-1)), 280, 200);
+			ofDrawBitmapString(tags[tags.size()-1].tagname, 200, 220);
+		}
 	}else if( mode == PLAY_MODE_PLAY )
 	{
 		if(fbo.texData.width != ofGetWidth())
@@ -664,6 +651,11 @@ void GrafPlayerApp::drawControls()
 void GrafPlayerApp::keyPressed (ofKeyEventArgs & event){
 
 
+	if( panel.isAnyTextBoxActive() )
+	{
+		panel.addChar(event.key);
+		return;
+	}
 	
     switch(event.key){
 
@@ -842,20 +834,26 @@ void GrafPlayerApp::nextTag(int dir)
 //--------------------------------------------------------------
 void GrafPlayerApp::loadTags()
 {
+		
 	if( threadedLoader.bResponseReady )
 	{
-		if( tags.size() < threadedLoader.totalLoaded )
+		
+		if( threadedLoader.getResponse() == 1 && threadedLoader.totalLoaded > 0 && tags.size() < threadedLoader.totalToLoad)
 		{
-			tags.push_back( grafTagMulti() );
-			int toLoad = tags.size()-1;
-			tags[ toLoad ] = threadedLoader.tags[ toLoad ];
-			smoother.smoothTag(4, &tags[ toLoad ]);
-			tags[toLoad].average();
-			tags[toLoad].average();
 			
-		}else if(threadedLoader.totalLoaded < threadedLoader.totalToLoad ){
-			threadedLoader.start();
-		}else{
+			loadStatus = "Loading...";
+			if( tags.size() < threadedLoader.totalLoaded ){
+				grafTagMulti temptTag;
+				tags.push_back( temptTag );
+				int toLoad = tags.size()-1;
+				tags[ toLoad ] = threadedLoader.tags[ toLoad ];
+				smoother.smoothTag(4, &tags[ toLoad ]);
+				tags[toLoad].average();
+				tags[toLoad].average();
+			}
+			
+		}else if( tags.size() > 0 && tags.size() >= threadedLoader.totalToLoad ){
+			
 			threadedLoader.stop();
 			mode = PLAY_MODE_PLAY;
 			resetPlayer(0);
@@ -863,72 +861,24 @@ void GrafPlayerApp::loadTags()
 		
 	}
 	
-	/*if( tags.size() < totalToLoad )
-	{
-		tags.push_back( grafTagMulti() );
-		int toLoad = tags.size()-1;
-		
-		gIO.loadTag( filesToLoad[ toLoad ], &tags[ toLoad ]);
-		tags[ toLoad ].tagname = filenames[ toLoad ];
-		
-		
-		smoother.smoothTag(4, &tags[ toLoad ]);
-		tags[toLoad].average();
-		tags[toLoad].average();
-		
-		
-		
-	}
-	else{
-		mode = PLAY_MODE_PLAY;
-		resetPlayer(0);
-	}*/
+	threadedLoader.update();
 	
 }
 //--------------------------------------------------------------
-void GrafPlayerApp::preLoadTags()
+void GrafPlayerApp::preLoadTags(int myMode)
 {
-	filesToLoad.clear();
-	filenames.clear();
-	totalToLoad = 0;
-	
-	cout << "PATH TO TAGS: " << ofToDataPath(myTagDirectory,true) << endl;
-	
-	vector<string> dirs;
-	dirLister.setPath( ofToDataPath(myTagDirectory,true) );
-	dirLister.findSubDirectories(dirs);
-	
-	for( int i = 0; i < dirs.size(); i++)
+	if( myMode == 0)
 	{
-		dirLister.setPath( ofToDataPath(myTagDirectory+dirs[i]+"/",true) );
-		dirLister.setExtensionToLookFor("gml");
-		int num = dirLister.getNumberOfFiles();
-		if( num > 0 )
-		{
-			filenames.push_back(dirs[i]);
-			filesToLoad.push_back(  ofToDataPath(myTagDirectory+dirs[i]+"/"+dirs[i]+".gml") );
-		}
+		threadedLoader.setup( ofToDataPath(myTagDirectory,true) );
+		loadStatus = "Loading...";
+
+	}
+	else{
+		string keywd = panel.getValueS("Rss Keyword");
+		threadedLoader.setup( keywd, ofToDataPath(myTagDirectory,true) );
+		loadStatus = "Downloading files...";
 	}
 	
-	
-	dirs.clear();
-	dirLister.setPath( ofToDataPath(myTagDirectory,true) );
-	dirLister.setExtensionToLookFor( "gml" );
-	dirLister.getFileNames(dirs);
-	
-	for( int i = 0; i < dirs.size(); i++)
-	{
-		filesToLoad.push_back( ofToDataPath(myTagDirectory+dirs[i]) );
-		
-		string name = dirs[i];
-		int endgml = name.find(".gml");
-		if( endgml >= 0 )
-			name.erase( endgml,name.size() );
-		
-		filenames.push_back(name);
-	}
-	
-	totalToLoad = filesToLoad.size();
 }
 
 //--------------------------------------------------------------
@@ -994,7 +944,11 @@ void GrafPlayerApp::setupControlPanel()
 	panel.addToggle("Save Tag Position/Rotation", "save_Tag_pos", false);
 	panel.addSlider("Eye Distance","eye_dist",5,0,20,false);
 	panel.addSlider("Change wait time","wait_time",30,0,120,true);
-	
+	panel.addToggle("Load tags", "LOAD_TAGS", false);
+	rssTextBox = panel.addTextInput("Rss Keyword", "RSS_KEYWORD", "", 100, 20 );
+	panel.addToggle("Load from rss", "LOAD_RSS", false);
+
+
 	//--- draw settings
 	panel.setWhichPanel("Draw Settings");
 	panel.addSlider("Line Alpha","LINE_ALPHA",.92,0,1,false);
@@ -1085,7 +1039,23 @@ void GrafPlayerApp::updateControlPanel(bool bUpdateAll)
 			saveAllTagPositions();
 		}
 
-
+		//
+		if( panel.getValueB("LOAD_TAGS") )
+		{
+			panel.setValueB("LOAD_TAGS",false);
+			mode = PLAY_MODE_LOAD;
+			if(tags.size()>0) tags.clear();
+			preLoadTags(0);
+		}
+		
+		if( panel.getValueB("LOAD_RSS") )
+		{
+			panel.setValueB("LOAD_RSS",false);
+			mode = PLAY_MODE_LOAD;
+			if(tags.size()>0) tags.clear();
+			preLoadTags(1);
+		}
+		
 	}
 	
 	if( panel.getSelectedPanelName() == "Draw Settings" || bUpdateAll)

@@ -304,7 +304,12 @@ class guiBaseObject{
             textColor.setSelectedColor(selR, selG, selB, selA);
          }
 
-        //list of properties
+		//-----------------------------------------------
+		virtual bool guiBaseObject::hasValueChanged(unsigned int which){
+			return value.hasValueChanged(which);
+		}
+		
+		//list of properties
         //------------------
         string name;
         string drawStr;

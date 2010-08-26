@@ -19,6 +19,13 @@
 		837A732A11B9663400E5E931 /* ofxQtVideoSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 837A732811B9663400E5E931 /* ofxQtVideoSaver.cpp */; };
 		8383131B1221BEE100EBDD62 /* gaManagerApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8383131A1221BEE100EBDD62 /* gaManagerApp.cpp */; };
 		838313991222C51200EBDD62 /* grafThreadedLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838313981222C51200EBDD62 /* grafThreadedLoader.cpp */; };
+		838318C71225A8E500EBDD62 /* grafLaserApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838318C61225A8E500EBDD62 /* grafLaserApp.cpp */; };
+		838318F61225BD3C00EBDD62 /* colorManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838318EB1225BD3C00EBDD62 /* colorManager.cpp */; };
+		838318F71225BD3C00EBDD62 /* coordWarping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838318ED1225BD3C00EBDD62 /* coordWarping.cpp */; };
+		838318F81225BD3C00EBDD62 /* guiQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838318EF1225BD3C00EBDD62 /* guiQuad.cpp */; };
+		838318F91225BD3C00EBDD62 /* hitZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838318F11225BD3C00EBDD62 /* hitZone.cpp */; };
+		838318FA1225BD3C00EBDD62 /* laserTracking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838318F31225BD3C00EBDD62 /* laserTracking.cpp */; };
+		838319CD122688D200EBDD62 /* guiValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838319CB122688D200EBDD62 /* guiValue.cpp */; };
 		838F53BB11BAADD300505713 /* ofxFBOTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838F53B911BAADD300505713 /* ofxFBOTexture.cpp */; };
 		838F541F11BAD3F000505713 /* grafArchitecture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838F541E11BAD3F000505713 /* grafArchitecture.cpp */; };
 		838F543E11BAD92A00505713 /* polyAdv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 838F543111BAD92A00505713 /* polyAdv.cpp */; };
@@ -210,6 +217,22 @@
 		8383131A1221BEE100EBDD62 /* gaManagerApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gaManagerApp.cpp; path = apps/gaManagerApp.cpp; sourceTree = "<group>"; };
 		838313971222C51200EBDD62 /* grafThreadedLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = grafThreadedLoader.h; path = src/graf/grafThreadedLoader.h; sourceTree = "<group>"; };
 		838313981222C51200EBDD62 /* grafThreadedLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = grafThreadedLoader.cpp; path = src/graf/grafThreadedLoader.cpp; sourceTree = "<group>"; };
+		838318C51225A8E500EBDD62 /* grafLaserApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = grafLaserApp.h; path = apps/grafLaserApp.h; sourceTree = "<group>"; };
+		838318C61225A8E500EBDD62 /* grafLaserApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = grafLaserApp.cpp; path = apps/grafLaserApp.cpp; sourceTree = "<group>"; };
+		838318EB1225BD3C00EBDD62 /* colorManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = colorManager.cpp; sourceTree = "<group>"; };
+		838318EC1225BD3C00EBDD62 /* colorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = colorManager.h; sourceTree = "<group>"; };
+		838318ED1225BD3C00EBDD62 /* coordWarping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coordWarping.cpp; sourceTree = "<group>"; };
+		838318EE1225BD3C00EBDD62 /* coordWarping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coordWarping.h; sourceTree = "<group>"; };
+		838318EF1225BD3C00EBDD62 /* guiQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiQuad.cpp; sourceTree = "<group>"; };
+		838318F01225BD3C00EBDD62 /* guiQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiQuad.h; sourceTree = "<group>"; };
+		838318F11225BD3C00EBDD62 /* hitZone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hitZone.cpp; sourceTree = "<group>"; };
+		838318F21225BD3C00EBDD62 /* hitZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hitZone.h; sourceTree = "<group>"; };
+		838318F31225BD3C00EBDD62 /* laserTracking.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = laserTracking.cpp; sourceTree = "<group>"; };
+		838318F41225BD3C00EBDD62 /* laserTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = laserTracking.h; sourceTree = "<group>"; };
+		838318F51225BD3C00EBDD62 /* laserUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = laserUtils.h; sourceTree = "<group>"; };
+		8383195C122661FD00EBDD62 /* grafConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = grafConstants.h; path = graf/grafConstants.h; sourceTree = "<group>"; };
+		838319CB122688D200EBDD62 /* guiValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiValue.cpp; sourceTree = "<group>"; };
+		838319CC122688D200EBDD62 /* guiValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiValue.h; sourceTree = "<group>"; };
 		838F53B911BAADD300505713 /* ofxFBOTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFBOTexture.cpp; sourceTree = "<group>"; };
 		838F53BA11BAADD300505713 /* ofxFBOTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFBOTexture.h; sourceTree = "<group>"; };
 		838F541D11BAD3F000505713 /* grafArchitecture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = grafArchitecture.h; path = architecture/grafArchitecture.h; sourceTree = "<group>"; };
@@ -357,7 +380,6 @@
 		83DDD595118ED412007567E9 /* guiTypeText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiTypeText.h; sourceTree = "<group>"; };
 		83DDD596118ED412007567E9 /* guiTypeTextInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiTypeTextInput.h; sourceTree = "<group>"; };
 		83DDD597118ED412007567E9 /* guiTypeToggle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiTypeToggle.h; sourceTree = "<group>"; };
-		83DDD598118ED412007567E9 /* guiValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiValue.h; sourceTree = "<group>"; };
 		83DDD599118ED412007567E9 /* guiXmlValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiXmlValue.h; sourceTree = "<group>"; };
 		83DDD59A118ED412007567E9 /* ofxControlPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxControlPanel.cpp; sourceTree = "<group>"; };
 		83DDD59B118ED412007567E9 /* ofxControlPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxControlPanel.h; sourceTree = "<group>"; };
@@ -601,6 +623,24 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		838318EA1225BD3C00EBDD62 /* laserInput */ = {
+			isa = PBXGroup;
+			children = (
+				838318EB1225BD3C00EBDD62 /* colorManager.cpp */,
+				838318EC1225BD3C00EBDD62 /* colorManager.h */,
+				838318ED1225BD3C00EBDD62 /* coordWarping.cpp */,
+				838318EE1225BD3C00EBDD62 /* coordWarping.h */,
+				838318EF1225BD3C00EBDD62 /* guiQuad.cpp */,
+				838318F01225BD3C00EBDD62 /* guiQuad.h */,
+				838318F11225BD3C00EBDD62 /* hitZone.cpp */,
+				838318F21225BD3C00EBDD62 /* hitZone.h */,
+				838318F31225BD3C00EBDD62 /* laserTracking.cpp */,
+				838318F41225BD3C00EBDD62 /* laserTracking.h */,
+				838318F51225BD3C00EBDD62 /* laserUtils.h */,
+			);
+			path = laserInput;
+			sourceTree = "<group>";
+		};
 		838F53B811BAADD300505713 /* ofxFBOTexture */ = {
 			isa = PBXGroup;
 			children = (
@@ -841,10 +881,13 @@
 		83B10BE511AD550B0010F6B9 /* apps */ = {
 			isa = PBXGroup;
 			children = (
+				8383195C122661FD00EBDD62 /* grafConstants.h */,
 				838313191221BEE100EBDD62 /* gaManagerApp.h */,
 				8383131A1221BEE100EBDD62 /* gaManagerApp.cpp */,
 				83B10BE911AD55250010F6B9 /* grafPlayerApp.h */,
 				83B10BE811AD55250010F6B9 /* grafPlayerApp.cpp */,
+				838318C51225A8E500EBDD62 /* grafLaserApp.h */,
+				838318C61225A8E500EBDD62 /* grafLaserApp.cpp */,
 			);
 			name = apps;
 			sourceTree = "<group>";
@@ -931,6 +974,8 @@
 		83DDD587118ED412007567E9 /* ofxControlPanel */ = {
 			isa = PBXGroup;
 			children = (
+				838319CB122688D200EBDD62 /* guiValue.cpp */,
+				838319CC122688D200EBDD62 /* guiValue.h */,
 				83DDD588118ED412007567E9 /* guiBaseObject.h */,
 				83DDD589118ED412007567E9 /* guiColor.h */,
 				83DDD58A118ED412007567E9 /* guiCustomImpl.h */,
@@ -947,7 +992,6 @@
 				83DDD595118ED412007567E9 /* guiTypeText.h */,
 				83DDD596118ED412007567E9 /* guiTypeTextInput.h */,
 				83DDD597118ED412007567E9 /* guiTypeToggle.h */,
-				83DDD598118ED412007567E9 /* guiValue.h */,
 				83DDD599118ED412007567E9 /* guiXmlValue.h */,
 				83DDD59A118ED412007567E9 /* ofxControlPanel.cpp */,
 				83DDD59B118ED412007567E9 /* ofxControlPanel.h */,
@@ -1565,6 +1609,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				838318EA1225BD3C00EBDD62 /* laserInput */,
 				838F541811BABA8900505713 /* architecture */,
 				83B10BF711AD55540010F6B9 /* physics */,
 				83B10BE611AD55100010F6B9 /* audio */,
@@ -1836,6 +1881,13 @@
 				8377A08D11C2262B002F3ABE /* perspectiveWarper.cpp in Sources */,
 				8383131B1221BEE100EBDD62 /* gaManagerApp.cpp in Sources */,
 				838313991222C51200EBDD62 /* grafThreadedLoader.cpp in Sources */,
+				838318C71225A8E500EBDD62 /* grafLaserApp.cpp in Sources */,
+				838318F61225BD3C00EBDD62 /* colorManager.cpp in Sources */,
+				838318F71225BD3C00EBDD62 /* coordWarping.cpp in Sources */,
+				838318F81225BD3C00EBDD62 /* guiQuad.cpp in Sources */,
+				838318F91225BD3C00EBDD62 /* hitZone.cpp in Sources */,
+				838318FA1225BD3C00EBDD62 /* laserTracking.cpp in Sources */,
+				838319CD122688D200EBDD62 /* guiValue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

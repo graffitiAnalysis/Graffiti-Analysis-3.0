@@ -78,7 +78,7 @@ void AudioAnalyzer::update(){
 	//now we need to get the average
 	rmsAmplitude /= (float)bufferSize;
 	averageVal = .1;//rmsAmplitude;
-	cout << "average Val " << averageVal << endl;
+	//cout << "average Val " << averageVal << endl;
 	
 	fft->setSignal( audioInput );
 	

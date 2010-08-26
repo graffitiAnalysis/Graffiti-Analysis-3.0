@@ -5,16 +5,7 @@
 #include "ofMain.h"
 #include "grafPlayerApp.h"
 #include "gaManagerApp.h"
-
-/*
-Graffiti Analysis 2.0: Audio Interactive
-2010
-
-Analyzes audio input and plays <gml> tags that respond to fft data.
-
-*/
-
-#include "ofxQtVideoSaver.h"
+#include "grafLaserApp.h"
 
 
 class testApp : public ofBaseApp{
@@ -35,13 +26,12 @@ class testApp : public ofBaseApp{
 		void audioReceived(float * input, int bufferSize, int nChannels);
 		
 		GaManagerApp		manager;
-		GrafPlayerApp	grafInteractiveApp;
+		GrafPlayerApp		grafInteractiveApp;
+		GrafLaserApp		grafLaserApp;
+		
 		bool bShowMouse;
 		
-		//----- quicktime recording
-		ofxQtVideoSaver	movieSaver;
-		bool bRecordingMovie;
-		bool bUseRecorder;
+		
 
 };
 

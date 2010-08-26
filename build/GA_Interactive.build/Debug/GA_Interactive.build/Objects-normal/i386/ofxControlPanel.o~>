@@ -1,0 +1,1 @@
+/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/utils/ofxControlPanel/ofxControlPanel.cpp:906: error: no 'void ofxControlPanel::clearAllChanged()' member function declared in class 'ofxControlPanel'

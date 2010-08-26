@@ -12,6 +12,12 @@
 GaManagerApp::GaManagerApp()
 {
 	mode = GA_MODE_START;
+	
+	titleImage.loadImage("images/title_bg3.png");
+	fontS.loadFont("fonts/frabk.ttf",12);
+	fontSS.loadFont("fonts/frabk.ttf",10);
+	
+	bSetSplashTag = false;
 }
 
 GaManagerApp::~GaManagerApp()
@@ -20,18 +26,167 @@ GaManagerApp::~GaManagerApp()
 
 void GaManagerApp::setup()
 {
+	screenW = ofGetWidth();
+	screenH = ofGetHeight();
+	
+	xp = screenW - 445;
+	yp = 405;
+	
+	polyEditable polyTemp;
+	for( int i = 0; i < 3; i++)
+	{
+		polyButtons.push_back(polyTemp);
+		
+		polyButtons[i].pushVertex( ofPoint(xp,yp+0) );
+		polyButtons[i].pushVertex( ofPoint(xp+380,yp+0) );
+		polyButtons[i].pushVertex( ofPoint(xp+380,yp+40) );	
+		polyButtons[i].pushVertex( ofPoint(xp,yp+40) );
+		
+		yp += 40;
+	}
+	
+	
+	gIO.loadTag("settings/she-04.gml", &tag);
+	particleDrawer.setup(ofGetWidth(),ofGetHeight());
+	
+	rotationY = 0;
+	drawer.alpha = .9;
+	drawer.lineAlpha = .99;
+	particleDrawer.numXtras = 3;
+	myTagPlayer.bReset = true;
+	
+	if( tag.myStrokes.size() > 0 ) bSetSplashTag = true;
+	
+	if(bSetSplashTag)
+	{
+		smoother.smoothTag(4, &tag);
+		tag.average();
+		tag.average();
+	}
+	
 }
+
+float lastTime = 0;
 
 void GaManagerApp::update()
 {
+	float dt  = ofGetElapsedTimef()-lastTime;
+	lastTime  = ofGetElapsedTimef();
+	
+	if(bSetSplashTag)
+	{
+	drawer.setup( &tag, tag.distMax );
+	
+	//---- update tag playing state
+	if( !myTagPlayer.bDonePlaying )					
+		myTagPlayer.update(&tag);	// normal play, update tag
+			
+	rotationY += dt;
+	
+	particleDrawer.update( myTagPlayer.getCurrentPoint(),myTagPlayer.getVelocityForTime(&tag),  dt, myTagPlayer.bReset);
+	myTagPlayer.bReset = false;
+	
+	}
+	
 }
 
 void GaManagerApp::draw()
 {
+	
+	if(screenW != ofGetWidth() )
+	{
+		int diffX = ofGetWidth()- screenW;
+		for( int i = 0; i < 3; i++)
+			polyButtons[i].moveAllPointsBy( ofPoint(diffX,0) );
+		
+		screenW = ofGetWidth();
+		
+	}
+	
+	if(bSetSplashTag)
+	{
+	
+	glEnable(GL_DEPTH_TEST);
+	
+	glPushMatrix();
+	
+		glTranslatef(tag.position.x,tag.position.y, 0);
+		glTranslatef(ofGetWidth()/2.f, ofGetHeight()/2.f, 0);
+		glScalef(tag.position.z,tag.position.z,tag.position.z);
+		glRotatef(tag.rotation.x,1,0,0);
+		glRotatef(tag.rotation.y+rotationY,0,1,0);
+		glRotatef(tag.rotation.z,0,0,1);
+	
+		glTranslatef(-tag.min.x*tag.drawScale,-tag.min.y*tag.drawScale,-tag.min.z);
+		glTranslatef(-tag.center.x*tag.drawScale,-tag.center.y*tag.drawScale,-tag.center.z);
+		
+		glDisable(GL_DEPTH_TEST);
+		particleDrawer.draw(myTagPlayer.getCurrentPoint().z,  ofGetWidth(),  ofGetHeight());
+		glEnable(GL_DEPTH_TEST);
+						  
+						  
+		glPushMatrix();
+			glScalef( tag.drawScale, tag.drawScale, 1);
+			drawer.draw( myTagPlayer.getCurrentStroke(), myTagPlayer.getCurrentId() );
+		glPopMatrix();
+		
+	glPopMatrix();
+	
+	}
+	
+	glDisable(GL_DEPTH_TEST);
+	
+	xp = screenW - 425;
+	yp = 120;
+	
+	ofEnableAlphaBlending();
+	
+	
+	ofFill();
+	ofSetColor(0, 0, 0, 240);
+	ofRect(xp-20,-10,380,ofGetHeight()+20);
+	
+	ofNoFill();
+	ofSetColor(200, 200, 200);
+	ofRect(xp-20,-10,380,ofGetHeight()+20);
+	
 	ofSetColor(255, 255, 255);
+	titleImage.draw(xp-3,yp);
+	
+	yp += titleImage.height + 40;
+	
+	fontSS.drawString("Graffiti Analysis 3.0 by Evan Roth.",xp,yp);
+	fontSS.drawString("Software development by Chris Sugrue & Theo Watson.",xp,yp+20);
+	fontSS.drawString("Complies with all <GML> standards.",xp,yp+40);
+	fontSS.drawString("GNU General Public License.",xp,yp+60);
+	fontSS.drawString("graffitianalysis.com", xp, yp+90);
+	
+	yp+=200;
+	fontSS.drawString("LAUNCH", xp, yp+0);
+	fontS.drawString("PLAYBACK", xp+60, yp+0);
+	
+	fontSS.drawString("LAUNCH", xp, yp+40);
+	fontS.drawString("RECORDER ", xp+60, yp+40);
+	
+	fontSS.drawString("LAUNCH", xp, yp+80);
+	fontS.drawString("LASER TAG ", xp+60, yp+80);
 	
 	glPushMatrix();
 		glTranslatef(ofGetWidth()/2,ofGetHeight()/2,0);
-		ofDrawBitmapString("Temporary menu (will be buttons)\n\nF1: start\nF2: recorder\nF3: player\nF4: laser tag", 0, 0);
+		//ofDrawBitmapString("Temporary menu (will be buttons)\n\nF1: start\nF2: recorder\nF3: player\nF4: laser tag", 0, 0);
 	glPopMatrix();
+	
+	for( int i = 0; i < 3; i++) polyButtons[i].draw();
+	
 }
+
+
+int GaManagerApp::hitTest(int x, int y)
+{
+	if( polyButtons[0].bHitTest(x,y) ) return GA_MODE_PLAYER;
+	else if( polyButtons[1].bHitTest(x,y) ) return GA_MODE_RECORDER;
+	else if( polyButtons[2].bHitTest(x,y) ) return GA_MODE_LASER;
+
+	return -1;
+}
+

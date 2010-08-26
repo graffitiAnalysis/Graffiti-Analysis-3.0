@@ -1,0 +1,54 @@
+<useLaser>
+    <val_0>1.000000</val_0>
+</useLaser>
+<bCamera>
+    <val_0>1.000000</val_0>
+</bCamera>
+<camSettings>
+    <val_0>0.000000</val_0>
+</camSettings>
+<bShowPanel>
+    <val_0>1.000000</val_0>
+</bShowPanel>
+<laserMode>
+    <val_0>1.000000</val_0>
+</laserMode>
+<whichCamera>
+    <val_0>2.666667</val_0>
+</whichCamera>
+<hue>
+    <val_0>0.000000</val_0>
+</hue>
+<hueWidth>
+    <val_0>0.000000</val_0>
+</hueWidth>
+<saturation>
+    <val_0>0.000000</val_0>
+</saturation>
+<value>
+    <val_0>0.000000</val_0>
+</value>
+<bUseClearZone>
+    <val_0>0.000000</val_0>
+</bUseClearZone>
+<bAutoEndTag>
+    <val_0>1.000000</val_0>
+</bAutoEndTag>
+<autoEndTime>
+    <val_0>2.200000</val_0>
+</autoEndTime>
+<nFramesNewStroke>
+    <val_0>12.000000</val_0>
+</nFramesNewStroke>
+<jumpDist>
+    <val_0>0.200000</val_0>
+</jumpDist>
+<laserMove>
+    <val_0>1.000000</val_0>
+</laserMove>
+<laserRotAmount>
+    <val_0>1.000000</val_0>
+</laserRotAmount>
+<laserSlowRate>
+    <val_0>0.980000</val_0>
+</laserSlowRate>

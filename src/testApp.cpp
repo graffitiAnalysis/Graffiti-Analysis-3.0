@@ -26,11 +26,16 @@ void testApp::update(){
 
 	if( manager.mode == GA_MODE_START ) manager.update();
 	else if( manager.mode == GA_MODE_RECORDER ) ;
-	else if( manager.mode == GA_MODE_PLAYER ){
-	 if( !grafInteractiveApp.bSetup) grafInteractiveApp.setup();
-	 else grafInteractiveApp.update();
+	else if( manager.mode == GA_MODE_PLAYER )
+	{
+		if( !grafInteractiveApp.bSetup) grafInteractiveApp.setup();
+		else grafInteractiveApp.update();
 	}
-	else if( manager.mode == GA_MODE_LASER ) ;
+	else if( manager.mode == GA_MODE_LASER )
+	{
+		if( !grafLaserApp.bSetup) grafLaserApp.setup();
+		else grafLaserApp.update();
+	}
 	
 	ofSoundUpdate();	
 
@@ -50,9 +55,10 @@ void testApp::draw(){
 		if(grafInteractiveApp.bSetup) grafInteractiveApp.draw();
 	}
 	else if( manager.mode == GA_MODE_LASER ){
+		if(grafLaserApp.bSetup) grafLaserApp.draw();
 		glPushMatrix();
 			glTranslatef(ofGetWidth()/2,ofGetHeight()/2,0);
-			ofDrawBitmapString("Laser Tag: Not ready yet.", 0, 0);
+			//ofDrawBitmapString("Laser Tag: Not ready yet.", 0, 0);
 		glPopMatrix();
 	}
 		
@@ -61,21 +67,30 @@ void testApp::draw(){
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
 	
-	// global keys always in use
-	if( key == 'f' || key == 'F' )	ofToggleFullscreen();
-	else if( key == 'm')
-	{
-		bShowMouse = !bShowMouse;
-		if(!bShowMouse) ofHideCursor();
-		else ofShowCursor();
-		
-	}	
-	
 	// keys to switch modes
 	if( key == OF_KEY_F1 )		manager.setMode( GA_MODE_START );
 	else if( key == OF_KEY_F2 ) manager.setMode( GA_MODE_RECORDER );
 	else if( key == OF_KEY_F3 ) manager.setMode( GA_MODE_PLAYER );
 	else if( key == OF_KEY_F4 ) manager.setMode( GA_MODE_LASER );
+	
+	// global keys always in use
+	if( !grafInteractiveApp.panel.isAnyTextBoxActive() || manager.mode != GA_MODE_PLAYER )
+	{
+	
+		if( key == 'f' || key == 'F' )	ofToggleFullscreen();
+		else if( key == 'm')
+		{
+			bShowMouse = !bShowMouse;
+			if(!bShowMouse) ofHideCursor();
+			else ofShowCursor();
+			
+		}	
+	
+	}
+	
+	
+	
+	
 }
 
 //--------------------------------------------------------------
@@ -100,7 +115,13 @@ void testApp::mousePressed(int x, int y, int button){
 	int modifier = glutGetModifiers();
 	if( modifier == GLUT_ACTIVE_SHIFT) grafInteractiveApp.bShiftOn = true;
 	else grafInteractiveApp.bShiftOn = false;
-
+	
+	if( manager.mode == GA_MODE_START )
+	{
+		int hi = manager.hitTest(x,y);
+		if( hi >= 0 )
+			manager.setMode( hi );
+	}
 }
 
 //--------------------------------------------------------------
