@@ -21,3 +21,4 @@
 #include "guiTypeCustom.h"
 #include "guiCustomImpl.h"
 #include "guiTypeTextInput.h"
+#include "guiTypeSpace.h"

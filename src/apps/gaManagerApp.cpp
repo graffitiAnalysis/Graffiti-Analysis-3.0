@@ -18,6 +18,7 @@ GaManagerApp::GaManagerApp()
 	fontSS.loadFont("fonts/frabk.ttf",10);
 	
 	bSetSplashTag = false;
+	tModes = 2;
 }
 
 GaManagerApp::~GaManagerApp()
@@ -29,7 +30,7 @@ void GaManagerApp::setup()
 	screenW = ofGetWidth();
 	screenH = ofGetHeight();
 	
-	xp = screenW - 445;
+	xp = ofGetWidth()-320;//(screenW/2) - (380/2);
 	yp = 405;
 	
 	polyEditable polyTemp;
@@ -136,19 +137,20 @@ void GaManagerApp::draw()
 	
 	glDisable(GL_DEPTH_TEST);
 	
-	xp = screenW - 425;
+	xp = ofGetWidth()-320;
 	yp = 120;
 	
 	ofEnableAlphaBlending();
 	
-	
 	ofFill();
-	ofSetColor(0, 0, 0, 240);
-	ofRect(xp-20,-10,380,ofGetHeight()+20);
+	ofSetColor(0, 0, 0, 220);
+	ofRect(xp,-10,380,ofGetHeight()+20);
 	
 	ofNoFill();
-	ofSetColor(200, 200, 200);
-	ofRect(xp-20,-10,380,ofGetHeight()+20);
+	ofSetColor(100, 100, 100);
+	ofRect(xp,-10,380,ofGetHeight()+20);
+	
+	xp += 20;
 	
 	ofSetColor(255, 255, 255);
 	titleImage.draw(xp-3,yp);
@@ -156,37 +158,38 @@ void GaManagerApp::draw()
 	yp += titleImage.height + 40;
 	
 	fontSS.drawString("Graffiti Analysis 3.0 by Evan Roth.",xp,yp);
-	fontSS.drawString("Software development by Chris Sugrue & Theo Watson.",xp,yp+20);
-	fontSS.drawString("Complies with all <GML> standards.",xp,yp+40);
-	fontSS.drawString("GNU General Public License.",xp,yp+60);
-	fontSS.drawString("graffitianalysis.com", xp, yp+90);
+	fontSS.drawString("Software development by Chris Sugrue.",xp,yp+=20);
+	fontSS.drawString("Laser Tag integration by Theo Watson.",xp,yp+=20);
+	fontSS.drawString("Complies with all <GML> standards.",xp,yp+=20);
+	fontSS.drawString("GNU General Public License.",xp,yp+=20);
+	fontSS.drawString("graffitianalysis.com", xp, yp+=30);
 	
-	yp+=200;
-	fontSS.drawString("LAUNCH", xp, yp+0);
-	fontS.drawString("PLAYBACK", xp+60, yp+0);
 	
-	fontSS.drawString("LAUNCH", xp, yp+40);
-	fontS.drawString("RECORDER ", xp+60, yp+40);
+	yp+=90;
+	fontSS.drawString("LAUNCH", xp, yp);
+	fontS.drawString("PLAYBACK", xp+60, yp);
 	
-	fontSS.drawString("LAUNCH", xp, yp+80);
-	fontS.drawString("LASER TAG ", xp+60, yp+80);
+	fontSS.drawString("LAUNCH", xp, yp+=40);
+	fontS.drawString("LASER TAG ", xp+60, yp);
 	
-	glPushMatrix();
-		glTranslatef(ofGetWidth()/2,ofGetHeight()/2,0);
-		//ofDrawBitmapString("Temporary menu (will be buttons)\n\nF1: start\nF2: recorder\nF3: player\nF4: laser tag", 0, 0);
-	glPopMatrix();
+	//fontSS.drawString("LAUNCH", xp, yp+80);
+	//fontS.drawString("RECORDER", xp+60, yp+80);
 	
-	for( int i = 0; i < 3; i++) polyButtons[i].draw();
+	for( int i = 0; i < tModes; i++) polyButtons[i].draw();
 	
+	
+	fontSS.drawString("F1: home", xp, yp+=80);
+	fontSS.drawString("x: toggle controls", xp, yp+=20);
+	fontSS.drawString("f: toggle fullscreen", xp, yp+=20);
 }
 
 
 int GaManagerApp::hitTest(int x, int y)
 {
 	if( polyButtons[0].bHitTest(x,y) ) return GA_MODE_PLAYER;
-	else if( polyButtons[1].bHitTest(x,y) ) return GA_MODE_RECORDER;
-	else if( polyButtons[2].bHitTest(x,y) ) return GA_MODE_LASER;
-
+	else if( polyButtons[1].bHitTest(x,y) ) return GA_MODE_LASER;
+	//else if( polyButtons[2].bHitTest(x,y) ) return GA_MODE_RECORDER;
+	
 	return -1;
 }
 

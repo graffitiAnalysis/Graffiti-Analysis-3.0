@@ -7,13 +7,13 @@
         </header>
         <environment>
             <offset>
-                <x>-22.000000</x>
-                <y>-42.000000</y>
+                <x>18.998732</x>
+                <y>-41.999931</y>
                 <z>1.000000</z>
             </offset>
             <rotation>
                 <x>49.000000</x>
-                <y>8.000000</y>
+                <y>32.000000</y>
                 <z>0.000000</z>
             </rotation>
         </environment>

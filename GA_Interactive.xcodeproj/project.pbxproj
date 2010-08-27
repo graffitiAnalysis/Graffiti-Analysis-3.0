@@ -233,6 +233,7 @@
 		8383195C122661FD00EBDD62 /* grafConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = grafConstants.h; path = graf/grafConstants.h; sourceTree = "<group>"; };
 		838319CB122688D200EBDD62 /* guiValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guiValue.cpp; sourceTree = "<group>"; };
 		838319CC122688D200EBDD62 /* guiValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiValue.h; sourceTree = "<group>"; };
+		83831D021227ABD600EBDD62 /* guiTypeSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guiTypeSpace.h; sourceTree = "<group>"; };
 		838F53B911BAADD300505713 /* ofxFBOTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFBOTexture.cpp; sourceTree = "<group>"; };
 		838F53BA11BAADD300505713 /* ofxFBOTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFBOTexture.h; sourceTree = "<group>"; };
 		838F541D11BAD3F000505713 /* grafArchitecture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = grafArchitecture.h; path = architecture/grafArchitecture.h; sourceTree = "<group>"; };
@@ -995,6 +996,7 @@
 				83DDD599118ED412007567E9 /* guiXmlValue.h */,
 				83DDD59A118ED412007567E9 /* ofxControlPanel.cpp */,
 				83DDD59B118ED412007567E9 /* ofxControlPanel.h */,
+				83831D021227ABD600EBDD62 /* guiTypeSpace.h */,
 				83DDD59C118ED412007567E9 /* simpleColor.h */,
 				83DDD59D118ED412007567E9 /* simpleFileLister.h */,
 				83DDD59E118ED412007567E9 /* simpleLogger.h */,

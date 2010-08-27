@@ -8,10 +8,10 @@
 //hehe - there is no xml yet!!!
 //but we are setting things up for XML
 
-#define borderWidth  10.f
-#define topSpacing   20.f
-#define tabWidth	25.f
-#define tabHeight	10.f
+//#define borderWidth  10.f
+//#define topSpacing   20.f
+//#define tabWidth	25.f
+//#define tabHeight	10.f
 
 class xmlAssociation{
     public:
@@ -63,7 +63,9 @@ class ofxControlPanel: public guiBaseObject{
         guiTypeLogger * addLogger(string name, simpleLogger * logger, int drawW, int drawH);
         guiTypeFileLister * addFileLister(string name, simpleFileLister * lister, int drawW, int drawH);
 		guiTypeTextInput * addTextInput(string name, string xmlName, string value, int maxX, int maxY );
-
+		guiTypeSpace* addSpace(string name="space", string xmlName="space",int defaultValue = 0);
+		guiTypeText * addText(string name, string xmlName);
+		
         void setValueB(string xmlName, bool value,  int whichParam = 0);
         void setValueI(string xmlName, int value,  int whichParam = 0);
         void setValueF(string xmlName, float value,  int whichParam = 0);
@@ -73,7 +75,7 @@ class ofxControlPanel: public guiBaseObject{
         int getValueI(string xmlName, int whichParam = 0);
 		string getValueS(string xmlName, int whichParam = 0);
 		
-		void addChar(char key, int whichParam = 0);
+		void addChar(int key, int whichParam = 0);
 		void deleteLastChar( int whichParam = 0);
 	
         void setIncrementSave(string incrmentalFileBaseName);
@@ -142,6 +144,12 @@ class ofxControlPanel: public guiBaseObject{
 		ofPoint mouseDownPoint;
 
 		bool dragging;
+		
+		bool bDrawOutline, bShowTabs, bDrawHeader, bDrawLock;
+		float borderWidth;
+		float topSpacing;
+		float tabWidth;
+		float tabHeight;
 
 };
 

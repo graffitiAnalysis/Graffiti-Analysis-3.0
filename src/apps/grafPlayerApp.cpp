@@ -36,9 +36,9 @@ void GrafPlayerApp::setup(){
 	ofAddListener(ofEvents.keyPressed, this, &GrafPlayerApp::keyPressed);
 	ofAddListener(ofEvents.keyReleased, this, &GrafPlayerApp::keyReleased);
 
-	screenW			= 1024;
-	screenH			= 768;
-	loadScreenSettings();
+	screenW			= ofGetWidth();
+	screenH			= ofGetHeight();
+	//loadScreenSettings();
 	
 
 	mode			= PLAY_MODE_LOAD;
@@ -122,6 +122,10 @@ void GrafPlayerApp::setup(){
 	fboRight.allocate(screenW,screenH );
 	
 	loadStatus = "No tags loaded.";
+	if(panel.getValueB("AUTO_LOAD") )
+	{
+		preLoadTags(0);
+	}
 	
 	bSetup = true;
 	
@@ -141,6 +145,7 @@ void GrafPlayerApp::update(){
 	if( mode == PLAY_MODE_LOAD )
 	{
 		loadTags();
+		if(bUseAudio)audio.update();
 	}
 	else if( mode == PLAY_MODE_PLAY && tags.size() > 0 )
 	{
@@ -466,11 +471,11 @@ void GrafPlayerApp::draw(){
 	// architecture test image
 	if( mode == PLAY_MODE_LOAD )
 	{
-		ofDrawBitmapString(loadStatus, 200, 200);
+		ofDrawBitmapString(loadStatus, 30, 30);
 		if( tags.size() > 0 )
 		{
 			//ofDrawBitmapString(ofToString( (int)(tags.size()-1) ) + " of " + ofToString((totalToLoad-1)), 280, 200);
-			ofDrawBitmapString(tags[tags.size()-1].tagname, 200, 220);
+			ofDrawBitmapString(tags[tags.size()-1].tagname, 30, 50);
 		}
 	}else if( mode == PLAY_MODE_PLAY )
 	{
@@ -506,12 +511,15 @@ void GrafPlayerApp::draw(){
 		}else if( modeRender == GA_RMODE_RB )
 		{
 			float eyeDist = panel.getValueF("eye_dist");
+			int bRedOnRight = panel.getValueB("red_on_right");
 			
-			glColorMask(GL_TRUE,GL_FALSE,GL_FALSE,GL_FALSE); 
+			if(!bRedOnRight) glColorMask(GL_TRUE,GL_FALSE,GL_FALSE,GL_FALSE); 
+			else glColorMask(GL_FALSE,GL_TRUE,GL_TRUE,GL_TRUE);
 			drawStereoEye(-eyeDist);
 			
 			glClear( GL_DEPTH_BUFFER_BIT);
-			glColorMask(GL_FALSE,GL_TRUE,GL_TRUE,GL_TRUE);
+			if(!bRedOnRight) glColorMask(GL_FALSE,GL_TRUE,GL_TRUE,GL_TRUE);
+			else glColorMask(GL_TRUE,GL_FALSE,GL_FALSE,GL_FALSE); 
 			drawStereoEye(eyeDist);
 			
 			glColorMask(1,1,1,1);
@@ -631,20 +639,22 @@ void GrafPlayerApp::drawControls()
 		
 		panel.draw();
 		ofSetColor(255,255,255,200);
-		if( panel.getSelectedPanelName() != "Architecture Drawing" )
+		/*if( panel.getSelectedPanelName() != "Architecture Drawing" )
 		{
 			fontSS.drawString("x: toggle control panel  |  p: pause/play  |  s: screen capture  |  m: toggle mouse  |  f: toggle fullscreen  |  R: reset pos/rot  |  arrows: next/prev  |  esc: quit", 90, ofGetHeight()-50);
 			fontSS.drawString("left mouse: alter position  |  left+shift mouse: zoom  |  right mouse: rotate y  |  right+shift mouse: rotate x", 220, ofGetHeight()-30);
 		}else{
 			fontSS.drawString("left-mouse: add point  |  right-mouse: move / select all  |  left+shift mouse: move single point  |  Return: new shape  | Delete: remove last point", 90, ofGetHeight()-50);
 			
-		}
+		}*/
 		
 		
 		if( bUseAudio && panel.getSelectedPanelName() == "Audio Settings" )
 			audio.draw();
 		
 	}
+	
+	keypanel.draw();
 }
 
 //--------------------------------------------------------------
@@ -708,9 +718,10 @@ void GrafPlayerApp::mouseMoved(ofMouseEventArgs & event ){
 //--------------------------------------------------------------
 void GrafPlayerApp::mouseDragged(ofMouseEventArgs & event ){
 
-	if( bShowPanel && !panel.minimize) 
+	if( bShowPanel ) 
 	{
-		panel.mouseDragged(event.x,event.y,event.button);
+		if(!panel.minimize)panel.mouseDragged(event.x,event.y,event.button);
+		if(!keypanel.minimize)keypanel.mouseDragged(event.x,event.y,event.button);
 	}
 	
 	if(bUseAudio)
@@ -721,6 +732,7 @@ void GrafPlayerApp::mouseDragged(ofMouseEventArgs & event ){
 	bool bMoveTag = true;
 	
 	if( panel.isMouseInPanel(event.x, event.y) )						bMoveTag = false;
+	else if( keypanel.isMouseInPanel(event.x, event.y) )				bMoveTag = false;
 	else if( panel.getSelectedPanelName() == "Architecture Drawing")	bMoveTag = false;
 	else if( pWarper.isEditing() && pWarper.getMouseIndex() != -1)		bMoveTag = false;
 	else if(panel.getSelectedPanelName() == "Audio Settings" && audio.panel.isMouseInPanel(event.x, event.y) )				bMoveTag = false;
@@ -753,7 +765,7 @@ void GrafPlayerApp::mouseDragged(ofMouseEventArgs & event ){
 void GrafPlayerApp::mousePressed(ofMouseEventArgs & event ){
 
     if( bShowPanel ) panel.mousePressed(event.x,event.y,event.button);
-	
+	if( bShowPanel ) keypanel.mousePressed(event.x,event.y,event.button);
 	
 	if(bUseArchitecture)
 	{
@@ -774,6 +786,12 @@ void GrafPlayerApp::mouseReleased(ofMouseEventArgs & event ){
 	{
 		panel.mouseReleased();
 	}
+	
+	if( bShowPanel && !keypanel.minimize) 
+	{
+		keypanel.mouseReleased();
+	}
+	
 	 
 	if(bUseAudio)
 	{
@@ -922,33 +940,45 @@ void GrafPlayerApp::saveTagPositions()
 void GrafPlayerApp::setupControlPanel()
 {
 	
-	panel.setup("GA 3.0", ofGetWidth()-320, 20, 300, 600);
+	panel.setup("GA 3.0", ofGetWidth()-320, 20, 300, 650);
 	panel.addPanel("App Settings", 1, false);
 	panel.addPanel("Draw Settings", 1, false);
-	panel.addPanel("Audio Settings", 1, false);
-	panel.addPanel("Architecture Drawing", 1, false);
-	panel.addPanel("Architecture Settings", 1, false);
 	panel.addPanel("FBO Warper", 1, false);
-
+	panel.addPanel("Audio Settings", 1, false);
+	panel.addPanel("Architecture Settings", 1, false);
+	panel.addPanel("Red / Blue Settings", 1, false);
+	
 	//---- application sttings
 	panel.setWhichPanel("App Settings");
+	
+	
+	panel.addToggle("Load tags", "LOAD_TAGS", false);
+	panel.addToggle("Auto load on start", "AUTO_LOAD", true);
+	panel.addSpace();
+	
 	panel.addToggle("Use Audio", "use_audio",true);
 	panel.addToggle("Use Architecture", "use_arch",true);
-	panel.addToggle("Use Analglyph", "use_rb",true);
+	panel.addToggle("Use Red / Blue", "use_rb",true);
+	panel.addSpace();
+	
 	panel.addToggle("Play / Pause", "PLAY", true);
 	panel.addToggle("FullScreen", "FULL_SCREEN", false);
 	panel.addToggle("Rotate", "ROTATE", true);
 	panel.addSlider("Rotation Speed","ROT_SPEED",.65,0,4,false);
+	panel.addSlider("Change wait time","wait_time",30,0,120,true);
 	panel.addToggle("Display filename", "SHOW_NAME", true);
 	panel.addToggle("Display time", "SHOW_TIME", true);
 	panel.addToggle("Save Tag Position/Rotation", "save_Tag_pos", false);
-	panel.addSlider("Eye Distance","eye_dist",5,0,20,false);
-	panel.addSlider("Change wait time","wait_time",30,0,120,true);
-	panel.addToggle("Load tags", "LOAD_TAGS", false);
-	rssTextBox = panel.addTextInput("Rss Keyword", "RSS_KEYWORD", "", 100, 20 );
+	panel.addSpace();
+	
+	rssTextBox = panel.addTextInput("Rss Keyword", "RSS_KEYWORD", "", 200, 18 );
 	panel.addToggle("Load from rss", "LOAD_RSS", false);
-
-
+		
+	//--- rb
+	panel.setWhichPanel("Red / Blue Settings");
+	panel.addSlider("Eye Distance","eye_dist",5,0,20,false);
+	panel.addToggle("Red Channel on Right","red_on_right",true);
+	
 	//--- draw settings
 	panel.setWhichPanel("Draw Settings");
 	panel.addSlider("Line Alpha","LINE_ALPHA",.92,0,1,false);
@@ -979,21 +1009,24 @@ void GrafPlayerApp::setupControlPanel()
 	panel.addToggle("Use bounce", "use_bounce", true);
 	panel.addToggle("Use drop particel", "use_drop", true);
 
+	//--- arch settings
 	panel.setWhichPanel("Architecture Settings");
-	panel.addToggle("show drawing tool", "show_drawing_tool",false);
-	//panel.addToggle("show image", "show_image",true);
-	panel.addSlider("mass","box_mass",1,0,20,false);
-	panel.addSlider("bounce","box_bounce",.53,0,2,false);
-	panel.addSlider("friction","box_friction",.41,0,2,false);
-	panel.addSlider("gravity","gravity",6,0,20,false);
-	
-	panel.setWhichPanel("Architecture Drawing");
 	panel.addToggle("new structure", "new_structure",false);
 	panel.addToggle("done","arch_done",false);
 	panel.addToggle("save xml", "arch_save", false);
 	panel.addToggle("load xml", "arch_load", false);
 	panel.addToggle("clear", "arch_clear", false);
+	panel.addSpace();
 	
+	panel.addToggle("show drawing tool", "show_drawing_tool",false);
+	panel.addToggle("show image", "show_image",true);
+	panel.addSlider("mass","box_mass",1,0,20,false);
+	panel.addSlider("bounce","box_bounce",.53,0,2,false);
+	panel.addSlider("friction","box_friction",.41,0,2,false);
+	panel.addSlider("gravity","gravity",6,0,20,false);
+	
+	
+	//--- fbo settings	
 	panel.setWhichPanel("FBO Warper");
 	panel.addToggle("Load Warping", "load_warping", true);
 	panel.addToggle("Save Warping", "save_warping", false);
@@ -1004,6 +1037,43 @@ void GrafPlayerApp::setupControlPanel()
 	panel.loadSettings(pathToSettings+"appSettings.xml");
 	
 	updateControlPanel(true);
+	
+	keypanel.setup("GA 3.0", ofGetWidth()-560, 20, 230, 650);
+	keypanel.setBackgroundColor(0, 0, 0, 100);
+	keypanel.setForegroundColor(0, 0, 0, 200);
+	keypanel.setTextColor(220, 220, 220, 220);
+	keypanel.setOutlineColor(220, 220, 220, 220);
+	keypanel.borderWidth	= 3;
+	keypanel.bDrawOutline	= false;
+	keypanel.bShowTabs		= false;
+	keypanel.bDrawHeader	= false;
+	keypanel.topSpacing		= 1;
+	guiTypePanel * myPanel	= keypanel.addPanel(" ", 1, false);
+	myPanel->setElementSpacing(0, 5);
+	
+	keypanel.setWhichPanel(" ");
+	keypanel.addText("Key Commands:","K");
+	keypanel.addText("x: toggle control panel","x");
+	keypanel.addText("p: pause/play","p");
+	keypanel.addText("s: screen capture","s");
+	keypanel.addText("m: toggle mouse","m");
+	keypanel.addText("f: toggle fullscreen","f");
+	keypanel.addText("R: reset pos/rot","R");
+	keypanel.addText("arrows: next/prev","arrows");
+	keypanel.addText("esc: quit","esc");
+	keypanel.addText("L mouse: alter position","lm");
+	keypanel.addText("L+shift mouse: zoom","lsm");
+	keypanel.addText("R mouse: rotate y","rm");
+	keypanel.addText("R+shift mouse: rotate x","rsm");
+	//keypanel.addText("left-mouse: add point","lm");
+	//keypanel.addText("right-mouse: move / select all","rmm");
+	//keypanel.addText("left+shift mouse: move single point","lsmm");
+	//keypanel.addText("Return: new shape","Ret");
+	//keypanel.addText("Delete: remove last point","Del");
+	
+	keypanel.update();
+	
+	
 }
 //--------------------------------------------------------------
 void GrafPlayerApp::updateControlPanel(bool bUpdateAll)
@@ -1111,7 +1181,7 @@ void GrafPlayerApp::updateControlPanel(bool bUpdateAll)
 		audio.panel.hide();
 	}
 	
-	if( bUseArchitecture && panel.getSelectedPanelName() == "Architecture Drawing" )
+	if( bUseArchitecture && panel.getSelectedPanelName() == "Architecture Settings" )
 	{
 		if(panel.bNewPanelSelected)
 		{
@@ -1202,7 +1272,7 @@ void GrafPlayerApp::updateControlPanel(bool bUpdateAll)
 		pWarper.disableEditing();
 	}
 	
-	if( bUseArchitecture && panel.getSelectedPanelName() != "Architecture Drawing")
+	if( bUseArchitecture && panel.getSelectedPanelName() != "Architecture Settings")
 	{
 		archPhysics.bDrawingActive = false;
 		archPhysics.pGroup.disableAll(true);
@@ -1234,7 +1304,7 @@ void GrafPlayerApp::createWarpedArchitecture()
 		wPolys.push_back(tPoly);
 	}
 	
-	#ifdef GA_STACK_SCREENS
+	/*#ifdef GA_STACK_SCREENS
 		for( int i = 0; i < wPolys.size(); i++)
 		{
 			for( int j = 0; j < wPolys[i].pts.size(); j++)
@@ -1248,7 +1318,7 @@ void GrafPlayerApp::createWarpedArchitecture()
 				}
 			}
 		}
-	#else
+	#else*/
 		for( int i = 0; i < wPolys.size(); i++)
 		{
 			for( int j = 0; j < wPolys[i].pts.size(); j++)
@@ -1257,7 +1327,7 @@ void GrafPlayerApp::createWarpedArchitecture()
 				wPolys[i].pts[j] = wPoint;
 			}
 		}
-	#endif	
+	//#endif	
 	archPhysics.createArchitectureFromPolys(wPolys);
 }
 

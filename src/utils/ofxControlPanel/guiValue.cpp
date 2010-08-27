@@ -175,13 +175,13 @@ void guiValue::updatePct(int which){
 void guiValue::addValueS(string val){
 	valueS.push_back(val);
 	
-	// to avoid errors?
-	value.push_back(0);
-	valueI.push_back(0);
-	valueB.push_back(0);
+	value.push_back((float)0);
+	valueI.push_back((int)0);
+	valueB.push_back(false);
 	min.push_back(0);
 	max.push_back(1);
 	pct.push_back( 0.0 );
+	bChanged.push_back(true);
 	
 	//update our pct
 	updatePct(value.size()-1);

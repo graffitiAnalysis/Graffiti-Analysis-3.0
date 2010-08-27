@@ -140,7 +140,7 @@
     <val_0>1.000000</val_0>
 </use_audio>
 <use_arch>
-    <val_0>0.000000</val_0>
+    <val_0>1.000000</val_0>
 </use_arch>
 <gravity>
     <val_0>6.000000</val_0>
@@ -169,3 +169,22 @@
 <Z_ALL>
     <val_0>0.000000</val_0>
 </Z_ALL>
+<LOAD_TAGS>
+    <val_0>0.000000</val_0>
+</LOAD_TAGS>
+<AUTO_LOAD>
+    <val_0>1.000000</val_0>
+</AUTO_LOAD>
+<space>
+    <val_0>0.000000</val_0>
+</space>
+<RSS_KEYWORD>
+    <val_0>0.000000</val_0>
+    <val_1>0.000000</val_1>
+</RSS_KEYWORD>
+<LOAD_RSS>
+    <val_0>0.000000</val_0>
+</LOAD_RSS>
+<red_on_right>
+    <val_0>1.000000</val_0>
+</red_on_right>

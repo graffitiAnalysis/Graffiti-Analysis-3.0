@@ -60,5 +60,6 @@ class GaManagerApp{
 		int screenW, screenH;
 		
 		bool bSetSplashTag;
+		int tModes;
 		
 };

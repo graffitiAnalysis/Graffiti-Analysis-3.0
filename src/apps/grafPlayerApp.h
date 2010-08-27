@@ -70,7 +70,7 @@ class GrafPlayerApp{
 		bool			bSetup;
 		
 		ofxControlPanel		panel;
-
+		ofxControlPanel		keypanel;
 
 	protected:
 

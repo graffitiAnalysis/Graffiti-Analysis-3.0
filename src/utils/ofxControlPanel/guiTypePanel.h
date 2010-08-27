@@ -142,8 +142,12 @@ class guiTypePanel : public guiBaseObject{
         }
 
         //-----------------------------------------------
-        void addElement( guiBaseObject * element ){
-            element->updateText();
+        void addElement( guiBaseObject * element, float spacingAmnt = -1 ){
+            
+			if(spacingAmnt < 0 ) spacingAmnt = spacingAmntY;
+			if(spacingAmnt!=spacingAmntY) cout << "spacing " << spacingAmnt << endl;
+			
+			element->updateText();
             element->setPosition(columns[col].x, columns[col].y);
             whichColumn.push_back(col);
 
@@ -151,8 +155,9 @@ class guiTypePanel : public guiBaseObject{
             children.push_back( element );
 
             //update the current position for the next element
-            columns[col].y += element->getHeight() + spacingAmntY;
-
+            columns[col].y += element->getHeight() + spacingAmnt;
+			cout << element->name << " "  << element->getHeight() << endl;
+			
             float checkWidth = element->getWidth();
             if(checkWidth >= columns[col].width ){
                 float amnt = checkWidth - columns[col].width;
@@ -231,11 +236,11 @@ class guiTypePanel : public guiBaseObject{
                     glColor4fv(outlineColor.getColorF());
                     ofRect(0, 0, boundingBox.width, boundingBox.height);
 
-                    if( locked ){
+                    /*if( locked ){
                         drawLocked();
                     }else{
                         drawUnlocked();
-                    }
+                    }*/
 
                 glPopMatrix();
                 renderText();

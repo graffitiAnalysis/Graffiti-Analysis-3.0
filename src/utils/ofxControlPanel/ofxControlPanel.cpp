@@ -20,6 +20,17 @@ ofxControlPanel::ofxControlPanel(){
     incrementSaveName = "";
     xmlObjects.clear();
 	
+	bDrawOutline = true;
+	bShowTabs = true;
+	bDrawHeader	= true;
+	borderWidth  = 10;
+	topSpacing   = 20.f;
+	tabWidth	 = 25.f;
+	tabHeight	 = 10.f;
+	
+	bDrawOutline = true;
+	bShowTabs = true;
+	
 }
 
 ofxControlPanel::~ofxControlPanel(){
@@ -161,6 +172,27 @@ guiTypeToggle * ofxControlPanel::addToggle(string name, string xmlName, bool def
     return tmp;
 }
 
+//---------------------------------------------
+guiTypeSpace* ofxControlPanel::addSpace(string name, string xmlName, int defaultValue){
+    if( currentPanel < 0 || currentPanel >= panels.size() )return NULL;
+	
+    //add a new slider to our list
+    guiTypeSpace * tmp = new guiTypeSpace();
+	
+    //setup and dimensions
+    tmp->setup(name);
+    tmp->setDimensions(panels[currentPanel]->getWidth()-40,10);
+   // tmp->setTypeBool();
+    tmp->xmlName = xmlName;
+	//tmp->boundingBox.height = 0;
+	
+    xmlObjects.push_back( xmlAssociation(tmp, xmlName, 1) );
+    panels[currentPanel]->addElement( tmp, 0 );
+	
+    guiObjects.push_back(tmp);
+	
+    return tmp;
+}
 
 //---------------------------------------------
 guiTypeMultiToggle * ofxControlPanel::addMultiToggle(string name, string xmlName, int defaultBox, vector <string> boxNames){
@@ -283,7 +315,39 @@ guiTypeTextInput * ofxControlPanel::addTextInput(string sliderName, string xmlNa
 }
 
 //---------------------------------------------
+guiTypeText * ofxControlPanel::addText(string name, string xmlName)
+{
+	if( currentPanel < 0 || currentPanel >= panels.size() )return NULL;
+	
+    //add a new slider to our list
+    guiTypeText * tmp = new guiTypeText();
+	
+    //setup and dimensions
+    tmp->setup(name);
+    
+	//tmp->setDimensions(maxX, maxY);
+    tmp->xmlName = xmlName;
+    tmp->setTypeString();
+	
+	//if( bUseTTFFont ){
+    //    tmp->setInputFont(&guiTTFFont);
+    //}
+	
+    xmlObjects.push_back( xmlAssociation(tmp, xmlName, 2) );
+    guiObjects.push_back(tmp);
+	
+    if( bUseTTFFont ){
+        tmp->setFont(&guiTTFFont);
+    }
+	
+    panels[currentPanel]->addElement( tmp );
+	
+    return tmp;
+}
+
+//---------------------------------------------
 guiTypeDrawable * ofxControlPanel::addDrawableRect(string name, ofBaseDraws * drawablePtr, int drawW, int drawH){
+
     if( currentPanel < 0 || currentPanel >= panels.size() )return NULL;
     guiTypeDrawable * vid = new guiTypeDrawable();
 
@@ -455,8 +519,9 @@ string ofxControlPanel::getValueS(string xmlName, int whichParam){
 }
 //---------------------------------------------
 
-void ofxControlPanel::addChar(char key,int whichParam)
+void ofxControlPanel::addChar(int key,int whichParam)
 {
+	cout << "add char: " << key << " bkc " << OF_KEY_BACKSPACE << endl;
 	for(int i = 0; i < guiObjects.size(); i++){
         if( guiObjects[i]->dataType == SG_TYPE_STRING && guiObjects[i]->value.getValueB() ){
             if( whichParam >= 0  ){
@@ -465,8 +530,9 @@ void ofxControlPanel::addChar(char key,int whichParam)
 				int textW = ((guiTypeTextInput*)guiObjects[i])->valueText.stringWidth(nowStr);
 
 				if( textW  < guiObjects[i]->hitArea.width-10 ){
-					if( key == OF_KEY_BACKSPACE && nowStr.length() > 0 ) nowStr.erase(nowStr.length());
-					else nowStr.push_back(key);
+					cout << "nowStr.length() " << nowStr.length() << endl;
+					if( key == OF_KEY_BACKSPACE && nowStr.length() > 0 ) nowStr.erase(nowStr.length()-1);
+					else if( key != OF_KEY_BACKSPACE) nowStr.push_back(key);
 					guiObjects[i]->value.setValueAsStr(nowStr, whichParam);
 				}
                 return;
@@ -799,7 +865,113 @@ void ofxControlPanel::updateBoundingBox(){
 // ############################################################## //
 
 //-------------------------------
+//-------------------------------
+
 void ofxControlPanel::draw(){
+    if( hidden ) return;
+	
+    ofPushStyle();
+    ofEnableAlphaBlending();
+	
+	float panelH = boundingBox.height;
+	if( minimize ){
+		panelH = 20;
+	}
+	
+	glPushMatrix();
+	glTranslatef(boundingBox.x, boundingBox.y, 0);
+	//draw the background
+	ofFill();
+	glColor4fv(bgColor.getColorF());
+	ofRect(0, 0, boundingBox.width, panelH);
+	
+	//draw the outline
+	if( bDrawOutline )
+	{
+		ofNoFill();
+		glColor4fv(outlineColor.getColorF());
+		ofRect(0, 0, boundingBox.width, panelH);
+		ofLine(0, 20, boundingBox.width, 20);
+	}
+	glPopMatrix();
+	
+	//--- header with save,restore, title, minimize etc.
+	if(bDrawHeader)
+	{	
+		
+		ofRect(minimizeButton.x, minimizeButton.y, minimizeButton.width, minimizeButton.height);
+		
+		
+		ofPushStyle();
+		ofFill();
+		
+		if( saveDown )glColor4fv(fgColor.getSelectedColorF());
+		else glColor4fv(fgColor.getColorF());
+		
+		ofRect(saveButton.x, saveButton.y, saveButton.width,saveButton.height);
+		ofSetColor(255, 255, 255);
+		ofDrawBitmapString("save", saveButton.x + 3, saveButton.y + saveButton.height -3);
+        ofPopStyle();
+		
+		
+        ofPushStyle();
+		ofFill();
+		
+		if( restoreDown )glColor4fv(fgColor.getSelectedColorF());
+		else glColor4fv(fgColor.getColorF());
+		
+		ofRect(restoreButton.x, restoreButton.y, restoreButton.width,restoreButton.height);
+		ofSetColor(255, 255, 255);
+		ofDrawBitmapString("restore", restoreButton.x + 3, restoreButton.y + restoreButton.height -3);
+        ofPopStyle();
+		
+		
+        ofPushMatrix();
+		ofTranslate(2,0,0);
+		glColor4fv(textColor.getColorF());
+		guiBaseObject::renderText();
+        ofPopMatrix();
+		
+	}
+	
+	if( !minimize ){
+		
+		//don't let gui elements go out of their panels
+		glEnable(GL_SCISSOR_TEST);
+		glScissor(boundingBox.x, ofGetHeight() - ( boundingBox.y + boundingBox.height - (-2 + topSpacing) ), boundingBox.width - borderWidth , boundingBox.height);
+		
+		if(bShowTabs)
+		{
+			for(int i = 0; i < panelTabs.size(); i++)
+			{
+				if( i == selectedPanel){
+					ofPushStyle();
+					ofFill();
+					glColor4fv(fgColor.getSelectedColorF());
+					ofRect(panelTabs[i].x, panelTabs[i].y, panelTabs[i].width, panelTabs[i].height);
+					glColor4fv(outlineColor.getColorF());
+					ofPopStyle();
+				}
+				glColor4fv(outlineColor.getColorF());
+				ofNoFill();
+				ofRect(panelTabs[i].x, panelTabs[i].y, panelTabs[i].width, panelTabs[i].height);
+			}
+		}
+		glPushMatrix();
+		glTranslatef(hitArea.x, hitArea.y, 0);
+		for(int i = 0; i < panels.size(); i++){
+			if( i == selectedPanel )panels[i]->render();
+		}
+		glPopMatrix();
+		
+		glDisable(GL_SCISSOR_TEST);
+	}
+	
+    ofPopStyle();
+}
+
+
+/*void ofxControlPanel::draw(){
     if( hidden ) return;
 
     ofPushStyle();
@@ -817,11 +989,14 @@ void ofxControlPanel::draw(){
             glColor4fv(bgColor.getColorF());
             ofRect(0, 0, boundingBox.width, panelH);
 
-            //draw the outline
-            ofNoFill();
-            glColor4fv(outlineColor.getColorF());
-            ofRect(0, 0, boundingBox.width, panelH);
-            ofLine(0, 20, boundingBox.width, 20);
+			//draw the outline
+			if( bDrawOutline )
+			{
+				ofNoFill();
+				glColor4fv(outlineColor.getColorF());
+				ofRect(0, 0, boundingBox.width, panelH);
+				ofLine(0, 20, boundingBox.width, 20);
+			}
         glPopMatrix();
 
         ofRect(minimizeButton.x, minimizeButton.y, minimizeButton.width, minimizeButton.height);
@@ -887,7 +1062,7 @@ void ofxControlPanel::draw(){
 
     ofPopStyle();
 }
-
+*/
 
 
 //---------------------------------------------
