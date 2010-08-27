@@ -651,10 +651,12 @@ void GrafPlayerApp::drawControls()
 		
 		if( bUseAudio && panel.getSelectedPanelName() == "Audio Settings" )
 			audio.draw();
+	
 		
+			keypanel.draw();
 	}
 	
-	keypanel.draw();
+	
 }
 
 //--------------------------------------------------------------
