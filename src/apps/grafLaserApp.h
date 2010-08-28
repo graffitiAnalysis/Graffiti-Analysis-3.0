@@ -36,6 +36,7 @@ class GrafLaserApp{
 		void setup();
 		void update();
 		void draw();
+		void drawTagLaser();
 		
 		void keyPressed(ofKeyEventArgs & event);
 		void keyReleased(ofKeyEventArgs & event);
@@ -143,7 +144,7 @@ class GrafLaserApp{
 		bool					bRotating;			// toggle auto rotation on/off
 		bool					bUseGravity;
 		
-	
+		float lastTime;
 
 		
 };

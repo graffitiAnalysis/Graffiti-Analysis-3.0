@@ -11,8 +11,8 @@
 
 GrafLaserApp::GrafLaserApp()
 {
-	bSetup = false;
-	bEnabled = false;
+	bSetup		= false;
+	bEnabled	= false;
 }
 
 GrafLaserApp::~GrafLaserApp()
@@ -108,12 +108,14 @@ void GrafLaserApp::setup()
 	grafTagMulti temptTag;
 	tags.push_back( temptTag );
 	
+	lastTime = ofGetElapsedTimef();
+	
 	//---
 	bSetup = true;
 		
 }
 
-void GrafLaserApp::update()
+/*void GrafLaserApp::update()
 {
 	if( mode == PLAY_MODE_RECORD )
 		handleLaserRecord();
@@ -121,16 +123,237 @@ void GrafLaserApp::update()
 		handleLaserPlayback();
 		
 	updateControlPanel();
+}*/
+
+//--------------------------------------------------------------
+void GrafLaserApp::update(){
+	
+	dt  = ofGetElapsedTimef()-lastTime;
+	lastTime  = ofGetElapsedTimef();
+	
+	if( panel.getValueB("useLaser") ){
+		if( panel.getValueB("bUseClearZone") ){
+			laserTracker.setUseClearZone(true);			
+			checkLaserHitState();		
+		}else{
+			laserTracker.setUseClearZone(false);
+		}
+		
+		if( panel.getValueB("laserMode") ){
+			mode = PLAY_MODE_RECORD;
+		}else{
+			mode = PLAY_MODE_PLAY;
+		}
+	}else{
+		mode = PLAY_MODE_PLAY;
+	}
+	
+	
+	bool bTrans = false;
+	if( currentTagID >= tags.size() ){
+		currentTagID = tags.size()-1;
+		if( currentTagID < 0 ){
+			currentTagID = 0;
+			//loadTags();
+		}
+	}
+	
+	
+	if( mode == PLAY_MODE_PLAY && tags.size() > 0 )
+	{
+		
+		//---- set drawing data for render
+		if( drawer.bSetupDrawer )
+			drawer.setup( &tags[currentTagID], tags[currentTagID].distMax );
+		
+		//---- update tag playing state
+		if( !myTagPlayer.bDonePlaying )					
+		{
+			myTagPlayer.update(&tags[currentTagID]);	// normal play, update tag
+			
+		}else if( !myTagPlayer.bPaused && myTagPlayer.bDonePlaying && waitTimer > 0)			   
+		{
+			waitTimer -= dt;	// pause time after drawn, before fades out
+		}
+		else if ( !myTagPlayer.bPaused && myTagPlayer.bDonePlaying && (drawer.alpha > 0 || particleDrawer.alpha > 0))			  		
+		{
+			//updateTransition(0);
+		}
+		else if (  !myTagPlayer.bPaused && myTagPlayer.bDonePlaying )							
+		{
+			resetPlayer(1);	// setup for next tag
+		}
+		
+		
+		//---------- AUDIO applied
+		//if( bUseAudio) updateAudio();
+		
+		
+		//--------- ARCHITECTURE
+		///if( bUseArchitecture ) updateArchitecture();
+		
+		
+		//--------- PARTICLES
+		//updateParticles();
+		
+		
+		//THEO
+		
+		if( panel.getValueB("useLaser") ){		
+			handleLaserPlayback();
+		}else{
+			//--------- TAG ROTATION + POSITION
+			if(bRotating && !myTagPlayer.bPaused ) rotationY += panel.getValueF("ROT_SPEED")*dt;
+			
+			// update pos / vel
+			tags[currentTagID].position.x += tagPosVel.x;
+			tags[currentTagID].position.y += tagPosVel.y;
+			
+			tagPosVel.x -= .1*tagPosVel.x;
+			tagPosVel.y -= .1*tagPosVel.y;
+		}
+	}
+	else if( mode == PLAY_MODE_RECORD ){
+		handleLaserRecord();
+		//if( tags.size() > currentTagID ) recDrawer.setup(&tags[currentTagID],0,0,1, tags[currentTagID].myStrokes[0].pts.size()-1);
+		
+		
+	}
+	
+	// controls
+	if( bShowPanel ) updateControlPanel();
+	
+	panel.clearAllChanged();
 }
 
 void GrafLaserApp::draw()
 {
+	
+	
+	screenW = ofGetWidth();
+	screenH = ofGetHeight();
+	
+	if(fbo.texData.width != ofGetWidth())
+	{
+		fbo.allocate(ofGetWidth(),ofGetHeight());
+	}
+
+	
+	drawTagLaser();
+	
 	if( panel.getSelectedPanelName() == "Laser Tracker" && bShowPanel ){
 		laserTracker.drawPanels(0, 0);
 	}
 	
 	panel.draw();
 }
+
+//--------------------------------------------------------------
+void GrafLaserApp::drawTagLaser(){
+	
+	if( mode == PLAY_MODE_LOAD )
+	{
+		//nothing while loading
+		;
+	}
+	else if( mode == PLAY_MODE_RECORD ){
+		
+		ofPushStyle();
+		ofSetColor(255, 255, 255, 255);
+		ofNoFill();
+		
+		for(int k = 0; k < simpleLine.size(); k++){
+			if( simpleLine[k].size() < 2 )continue;
+			
+			ofSetLineWidth(4);
+			ofBeginShape();
+			for(int i = 0; i < simpleLine[k].size(); i++){
+				ofVertex( simpleLine[k].at(i).x * (float)screenW, simpleLine[k].at(i).y * (float)screenH);
+			}
+			ofEndShape(false);
+		}
+		
+		ofPopStyle();		
+		
+		ofSetColor(255, 255, 255, 255);
+		
+		if(tags.size() > currentTagID){
+			glPushMatrix();
+			
+			//glTranslatef(0,0, zoom);
+			glScalef(tags[currentTagID].drawScale,tags[currentTagID].drawScale,1);
+			//recDrawer.draw(0,1,0,tags[currentTagID].myStrokes[0].pts.size());
+			glPopMatrix();
+		}
+		
+	}else if( mode == PLAY_MODE_PLAY && tags.size() ){
+		
+		
+		glPushMatrix();
+		
+	
+		
+		///glTranslatef(screenW/2, screenH/2, 0);
+		
+		glPushMatrix();
+		
+		glRotatef(tags[currentTagID].rotation.x,1,0,0);
+		glRotatef(tags[currentTagID].rotation.y+rotationY,0,1,0);
+		glRotatef(tags[currentTagID].rotation.z,0,0,1);
+		
+		///glTranslatef(-tags[currentTagID].center.x*tags[currentTagID].drawScale,-tags[currentTagID].center.y*tags[currentTagID].drawScale,-tags[currentTagID].center.z);
+		
+		glDisable(GL_DEPTH_TEST);
+		
+		// draw particles
+		particleDrawer.draw(myTagPlayer.getCurrentPoint().z,  screenW,  screenH);
+		
+		// draw audio particles
+		if( bUseAudio && panel.getValueB("use_drop") ) drops.draw();
+		
+		glEnable(GL_DEPTH_TEST);
+		
+		// draw tag
+		glPushMatrix();
+		glScalef( tags[currentTagID].drawScale, tags[currentTagID].drawScale, 1);
+		drawer.draw( myTagPlayer.getCurrentStroke(), myTagPlayer.getCurrentId() );
+		glPopMatrix();
+		
+		glPopMatrix();
+		
+		glPopMatrix();
+		
+		
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_FOG);		
+		
+	}
+	
+	if( panel.getValueB("useLaser") && panel.getValueB("bUseClearZone") ){
+		laserTracker.drawClearZone(0, 0, screenW, screenH);
+	}
+	
+	if(bUseArchitecture && mode == PLAY_MODE_PLAY )
+	{
+		
+		glViewport(0,0,fbo.texData.width,fbo.texData.height);
+		// set translation in polygon tool so drwaing happens in correct place
+		//archPhysics.offSetPre.x = (tags[currentTagID].position.x);
+		//archPhysics.offSetPre.y = (tags[currentTagID].position.y);
+		//archPhysics.offSet.x = (-tags[currentTagID].min.x*tags[currentTagID].drawScale) + (-tags[currentTagID].center.x*tags[currentTagID].drawScale);
+		//archPhysics.offSet.y = (-tags[currentTagID].min.y*tags[currentTagID].drawScale) + (-tags[currentTagID].center.y*tags[currentTagID].drawScale);
+		//archPhysics.scale = tags[currentTagID].position.z;
+		
+		archPhysics.draw();
+		
+	}
+	
+	
+	
+	
+	
+}
+
 
 void GrafLaserApp::keyPressed(ofKeyEventArgs & event)
 {

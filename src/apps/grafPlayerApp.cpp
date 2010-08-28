@@ -722,8 +722,11 @@ void GrafPlayerApp::mouseDragged(ofMouseEventArgs & event ){
 
 	if( bShowPanel ) 
 	{
-		if(!panel.minimize)panel.mouseDragged(event.x,event.y,event.button);
-		if(!keypanel.minimize)keypanel.mouseDragged(event.x,event.y,event.button);
+		if(!panel.minimize){
+		panel.mouseDragged(event.x,event.y,event.button);
+		keypanel.setPosition(panel.boundingBox.x-260,panel.boundingBox.y);
+		}
+		//if(!keypanel.minimize)keypanel.mouseDragged(event.x,event.y,event.button);
 	}
 	
 	if(bUseAudio)
@@ -734,7 +737,7 @@ void GrafPlayerApp::mouseDragged(ofMouseEventArgs & event ){
 	bool bMoveTag = true;
 	
 	if( panel.isMouseInPanel(event.x, event.y) )						bMoveTag = false;
-	else if( keypanel.isMouseInPanel(event.x, event.y) )				bMoveTag = false;
+	//else if( keypanel.isMouseInPanel(event.x, event.y) )				bMoveTag = false;
 	else if( panel.getSelectedPanelName() == "Architecture Drawing")	bMoveTag = false;
 	else if( pWarper.isEditing() && pWarper.getMouseIndex() != -1)		bMoveTag = false;
 	else if(panel.getSelectedPanelName() == "Audio Settings" && audio.panel.isMouseInPanel(event.x, event.y) )				bMoveTag = false;
@@ -1040,7 +1043,7 @@ void GrafPlayerApp::setupControlPanel()
 	
 	updateControlPanel(true);
 	
-	keypanel.setup("GA 3.0", ofGetWidth()-560, 20, 230, 650);
+	keypanel.setup("GA 3.0",  panel.boundingBox.x-260, 20, 230, 650);
 	keypanel.setBackgroundColor(0, 0, 0, 100);
 	keypanel.setForegroundColor(0, 0, 0, 200);
 	keypanel.setTextColor(220, 220, 220, 220);
@@ -1082,6 +1085,7 @@ void GrafPlayerApp::updateControlPanel(bool bUpdateAll)
 {
 	
 	panel.update();
+	keypanel.update();
 	
 	bUseAudio = panel.getValueB("use_audio");
 	bUseArchitecture = panel.getValueB("use_arch");

@@ -895,11 +895,10 @@ void ofxControlPanel::draw(){
 	}
 	glPopMatrix();
 	
-	//--- header with save,restore, title, minimize etc.
+	
 	if(bDrawHeader)
 	{	
 		
-		ofRect(minimizeButton.x, minimizeButton.y, minimizeButton.width, minimizeButton.height);
 		
 		
 		ofPushStyle();
@@ -966,6 +965,11 @@ void ofxControlPanel::draw(){
 		
 		glDisable(GL_SCISSOR_TEST);
 	}
+	
+	//--- header with save,restore, title, minimize etc.
+	ofNoFill();
+	glColor4fv(outlineColor.getColorF());
+	ofRect(minimizeButton.x, minimizeButton.y, minimizeButton.width, minimizeButton.height);
 	
     ofPopStyle();
 }

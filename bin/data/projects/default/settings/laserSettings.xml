@@ -2,31 +2,31 @@
     <val_0>1.000000</val_0>
 </useLaser>
 <bCamera>
-    <val_0>1.000000</val_0>
+    <val_0>0.000000</val_0>
 </bCamera>
 <camSettings>
     <val_0>0.000000</val_0>
 </camSettings>
 <bShowPanel>
-    <val_0>1.000000</val_0>
+    <val_0>0.000000</val_0>
 </bShowPanel>
 <laserMode>
-    <val_0>1.000000</val_0>
+    <val_0>0.000000</val_0>
 </laserMode>
 <whichCamera>
     <val_0>2.666667</val_0>
 </whichCamera>
 <hue>
-    <val_0>0.000000</val_0>
+    <val_0>0.272222</val_0>
 </hue>
 <hueWidth>
-    <val_0>0.000000</val_0>
+    <val_0>0.200000</val_0>
 </hueWidth>
 <saturation>
-    <val_0>0.000000</val_0>
+    <val_0>0.155556</val_0>
 </saturation>
 <value>
-    <val_0>0.000000</val_0>
+    <val_0>0.327778</val_0>
 </value>
 <bUseClearZone>
     <val_0>0.000000</val_0>

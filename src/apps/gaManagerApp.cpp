@@ -159,7 +159,7 @@ void GaManagerApp::draw()
 	
 	fontSS.drawString("Graffiti Analysis 3.0 by Evan Roth.",xp,yp);
 	fontSS.drawString("Software development by Chris Sugrue.",xp,yp+=20);
-	fontSS.drawString("Laser Tag integration by Theo Watson.",xp,yp+=20);
+	fontSS.drawString("Laser input integration by Theo Watson.",xp,yp+=20);
 	fontSS.drawString("Complies with all <GML> standards.",xp,yp+=20);
 	fontSS.drawString("GNU General Public License.",xp,yp+=20);
 	fontSS.drawString("graffitianalysis.com", xp, yp+=30);
@@ -170,7 +170,7 @@ void GaManagerApp::draw()
 	fontS.drawString("PLAYBACK", xp+60, yp);
 	
 	fontSS.drawString("LAUNCH", xp, yp+=40);
-	fontS.drawString("LASER TAG ", xp+60, yp);
+	fontS.drawString("LASER INPUT ", xp+60, yp);
 	
 	//fontSS.drawString("LAUNCH", xp, yp+80);
 	//fontS.drawString("RECORDER", xp+60, yp+80);
