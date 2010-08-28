@@ -1,0 +1,2 @@
+/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafLineDrawer.cpp:190: error: prototype for 'void grafLineDrawer::draw(int, float, int, float)' does not match any in class 'grafLineDrawer'
+/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafLineDrawer.h:18: error: candidate is: void grafLineDrawer::draw(int, float, int)

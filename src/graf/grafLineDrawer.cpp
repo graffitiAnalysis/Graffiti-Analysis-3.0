@@ -187,7 +187,7 @@ void grafLineDrawer::calculatePoint(timePt pt, float time_num, float dist, float
     right.push_back( ofPoint(right_x,right_y,time_num) );
 }
 
-void grafLineDrawer::draw( int lastPoint, float alpha, int startPoint )
+void grafLineDrawer::draw( int lastPoint, float alpha, int startPoint, float lineWidth  )
 {
 	//cout << "lastp " << lastPoint << " " << pts_r.size() << endl;
 	
@@ -200,7 +200,7 @@ void grafLineDrawer::draw( int lastPoint, float alpha, int startPoint )
 	//cout << "lastPoint " << lastPoint << endl;
 	float linePoints[6];
 	
-    glLineWidth(2);
+    glLineWidth(lineWidth);
 	
 	float colorOut[8] = {0,0,0,1,0,0,0,1};
 	

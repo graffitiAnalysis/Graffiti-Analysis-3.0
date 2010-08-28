@@ -1,2 +1,1 @@
-/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafDrawer.cpp:394: error: prototype for 'void grafDrawer::alterZDepth(grafTagMulti*)' does not match any in class 'grafDrawer'
-/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafDrawer.h:30: error: candidate is: void grafDrawer::alterZDepth(grafTagMulti*, float)
+i686-apple-darwin9-gcc-4.0.1: -lpthread: linker input file unused because linking not done

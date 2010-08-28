@@ -202,13 +202,12 @@ void grafDrawer::draw( int lastStroke, int lastPoint)
 	
 	for( int i = 0; i < lines.size(); i++)
 	{
-		if( i < lastStroke )		lines[i]->draw(-1,alpha);
-		else if( i == lastStroke )	lines[i]->draw(lastPoint,alpha);
+		if( i < lastStroke )		lines[i]->draw(-1,alpha,-1,lineWidth);
+		else if( i == lastStroke )	lines[i]->draw(lastPoint,alpha,-1,lineWidth);
 		
 		//if( i < lastStroke )		lines[i]->drawOutline(-1,alpha,lineWidth);
 		//else if( i == lastStroke )	lines[i]->drawOutline(lastPoint,alpha,lineWidth);
 	}
-	
 	glDisable( GL_DEPTH_TEST );
 	
 	
@@ -393,6 +392,7 @@ void grafDrawer::drawBoundingBox( ofPoint pmin, ofPoint pmax, ofPoint pcenter )
 
 void grafDrawer::alterZDepth( grafTagMulti * myTag)
 {
+	
 	for( int i = 0; i < myTag->myStrokes.size(); i++)
 	{
 		for( int j = 0; j < myTag->myStrokes[i].pts.size(); j++)

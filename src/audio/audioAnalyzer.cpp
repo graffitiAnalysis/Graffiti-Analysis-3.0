@@ -71,13 +71,13 @@ void AudioAnalyzer::update(){
 	for (int i = 0; i < bufferSize; i++){
 		
 		//calculate the root mean square amplitude
-		rmsAmplitude += sqrt(audioInput[i]*audioInput[i]);
+		rmsAmplitude += audioInput[i];//sqrt(audioInput[i]*audioInput[i]);
 		
 	}
 	
 	//now we need to get the average
 	rmsAmplitude /= (float)bufferSize;
-	averageVal = .1;//rmsAmplitude;
+	averageVal = rmsAmplitude;
 	//cout << "average Val " << averageVal << endl;
 	
 	fft->setSignal( audioInput );

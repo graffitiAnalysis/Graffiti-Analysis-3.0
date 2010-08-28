@@ -15,7 +15,7 @@ class grafLineDrawer
 		void setupUniform(vector<timePt> pts, float lineDist, int start=-1, int end=-1);
 		void average( float pct );
 	
-		void draw( int lastPt, float alpha = .75f, int startPt = -1);
+		void draw( int lastPt, float alpha = .75f, int startPt = -1, float lineWidth = 1);
 		void drawOutline( int lastPt, float alpha = .75f, float lineW = 1,int startPt = -1);
 	
 		float blendPct;

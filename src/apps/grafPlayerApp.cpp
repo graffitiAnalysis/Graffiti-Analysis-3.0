@@ -1006,7 +1006,7 @@ void GrafPlayerApp::setupControlPanel()
 	panel.setWhichPanel("Audio Settings");
 	panel.addSlider("Outward amp force","outward_amp_force",8,0,200,false);
 	panel.addSlider("Particle size force","particle_size_force",22,0,200,false);
-	panel.addSlider("Wave deform force","wave_deform_force",.25,0,2,false);
+	panel.addSlider("Wave deform force","wave_deform_force",1,0,10,false);
 	panel.addSlider("Bounce force","bounce_force",.25,0,2,false);
 	panel.addSlider("Drop p threshold","drop_p_thresh",.1,0,2,false);
 	// toggles to apply what to what...
