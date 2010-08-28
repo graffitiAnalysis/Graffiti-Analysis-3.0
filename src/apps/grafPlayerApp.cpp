@@ -364,7 +364,9 @@ void GrafPlayerApp::drawTagNormal(){
 	if( mode == PLAY_MODE_PLAY && tags.size() > 0)
 	{
 	
-	glViewport(tags[currentTagID].position.x,-tags[currentTagID].position.y,fbo.texData.width,fbo.texData.height);
+	//glViewport(tags[currentTagID].position.x,-tags[currentTagID].position.y,fbo.texData.width,fbo.texData.height);
+	glTranslatef(tags[currentTagID].position.x,tags[currentTagID].position.y,0);
+		
 		
 	ofEnableAlphaBlending();
 	ofSetColor(255,255,255,255);

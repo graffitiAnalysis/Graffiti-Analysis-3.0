@@ -331,7 +331,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>83831FC21229772600EBDD62</string>
+										<string>83831FF51229786600EBDD62</string>
 										<key>history</key>
 										<array>
 											<string>83DDD3DF118C740D007567E9</string>
@@ -446,7 +446,7 @@
 											<string>83831FB21229751A00EBDD62</string>
 											<string>83831FB31229751A00EBDD62</string>
 											<string>83831FB41229751A00EBDD62</string>
-											<string>83831FB51229751A00EBDD62</string>
+											<string>83831FC21229772600EBDD62</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -563,32 +563,6 @@
 											<string>83831D3D1227AEBF00EBDD62</string>
 											<string>83831DBE1227B8FB00EBDD62</string>
 											<string>83831E4F1227DC8E00EBDD62</string>
-											<string>83831F7B1229701400EBDD62</string>
-											<string>83831F7C1229701400EBDD62</string>
-											<string>83831F7D1229701400EBDD62</string>
-											<string>83831F7E1229701400EBDD62</string>
-											<string>83831F7F1229701400EBDD62</string>
-											<string>83831F801229701400EBDD62</string>
-											<string>83831F811229701400EBDD62</string>
-											<string>83831F821229701400EBDD62</string>
-											<string>83831F831229701400EBDD62</string>
-											<string>83831F841229701400EBDD62</string>
-											<string>83831F851229701400EBDD62</string>
-											<string>83831F861229701400EBDD62</string>
-											<string>83831F871229701400EBDD62</string>
-											<string>83831F881229701400EBDD62</string>
-											<string>83831F891229701400EBDD62</string>
-											<string>83831F8A1229701400EBDD62</string>
-											<string>83831F91122971F000EBDD62</string>
-											<string>83831FAD1229745B00EBDD62</string>
-											<string>83831FAE1229745B00EBDD62</string>
-											<string>83831FB61229751A00EBDD62</string>
-											<string>83831FB71229751A00EBDD62</string>
-											<string>83831FB81229751A00EBDD62</string>
-											<string>83831FB91229751A00EBDD62</string>
-											<string>83831FBA1229751A00EBDD62</string>
-											<string>83831FBB1229751A00EBDD62</string>
-											<string>83831FBC1229751A00EBDD62</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -646,9 +620,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>83831F8C1229701400EBDD62</string>
+				<string>83831FE9122977CE00EBDD62</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>83831F8D1229701400EBDD62</string>
+				<string>83831FEA122977CE00EBDD62</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -782,9 +756,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1C530D57069F1CE1000CFCEE</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>1C78EAAD065D492600B07095</string>
+		<string>1CD10A99069EF8BA00B06720</string>
 		<string>83DDD3CF118C73C3007567E9</string>
 		<string>/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/GA_Interactive.xcodeproj</string>
 	</array>
@@ -805,14 +778,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>grafLaserApp.cpp</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -868,7 +839,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>83DDD3CF118C73C3007567E9</string>
-				<string>83831F611229600400EBDD62</string>
+				<string>83831FEB122977CE00EBDD62</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -879,7 +850,7 @@
 			<key>WindowToolGUID</key>
 			<string>83DDD3CF118C73C3007567E9</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
@@ -988,13 +959,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1CD10A99069EF8BA00B06720</string>
-				<string>83831F621229600400EBDD62</string>
+				<string>83831FEC122977CE00EBDD62</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>83831F631229600400EBDD62</string>
-				<string>83831F641229600400EBDD62</string>
-				<string>83831F651229600400EBDD62</string>
-				<string>83831F661229600400EBDD62</string>
-				<string>83831F671229600400EBDD62</string>
+				<string>83831FED122977CE00EBDD62</string>
+				<string>83831FEE122977CE00EBDD62</string>
+				<string>83831FEF122977CE00EBDD62</string>
+				<string>83831FF0122977CE00EBDD62</string>
+				<string>83831FF1122977CE00EBDD62</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -1113,8 +1084,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -1150,7 +1119,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C78EAAD065D492600B07095</string>
-				<string>83831F681229600400EBDD62</string>
+				<string>83831FF2122977CE00EBDD62</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
@@ -1160,7 +1129,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>
