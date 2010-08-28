@@ -37,6 +37,7 @@ class GrafLaserApp{
 		void update();
 		void draw();
 		void drawTagLaser();
+		void drawControls();
 		
 		void keyPressed(ofKeyEventArgs & event);
 		void keyReleased(ofKeyEventArgs & event);
@@ -75,7 +76,6 @@ class GrafLaserApp{
 		void updateParticles();
 		void updateTransition( int type);
 		void updateAudio();
-		void updateArchitecture();
 		void updateZDepth(float z_const);
 		
 		//---- tag saving
@@ -95,7 +95,7 @@ class GrafLaserApp{
 		
 	
 		//---------- interactive architecture
-		void createWarpedArchitecture();
+		//void createWarpedArchitecture();
 		GrafArchitecture		archPhysics;		// physics / architecture effects
 		vector<polySimple> wPolys;
 		

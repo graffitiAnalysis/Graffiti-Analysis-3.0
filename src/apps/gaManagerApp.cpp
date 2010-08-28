@@ -84,7 +84,8 @@ void GaManagerApp::update()
 			
 	rotationY += dt;
 	
-	particleDrawer.update( myTagPlayer.getCurrentPoint(),myTagPlayer.getVelocityForTime(&tag),  dt, myTagPlayer.bReset);
+	particleDrawer.update( myTagPlayer.getCurrentPoint(),myTagPlayer.getVelocityForTime(&tag),  dt,  myTagPlayer.bReset, tag.center.z);
+		//particleDrawer.update( myTagPlayer.getCurrentPoint(),myTagPlayer.getVelocityForTime(&tag),  dt, myTagPlayer.bReset);
 	myTagPlayer.bReset = false;
 	
 	}

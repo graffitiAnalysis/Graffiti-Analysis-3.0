@@ -15,7 +15,7 @@ class grafVParticleField
 		void setup(int w, int h);
 		void reset();
 	
-		void update( ofPoint pt, ofPoint vel, float dt, bool bReset);
+		void update( ofPoint pt, ofPoint vel, float dt, bool bReset, float centerZ);
 		void fall( float dt);
 		void flatten(float zDepth, float timeToDoIt);
 		
@@ -29,6 +29,8 @@ class grafVParticleField
 		void updateDampingFromAudio(float val);
 		void updateParticleAmpli(float * vals, float averageVal, int tVals, float maxScale = 4.f);
 		
+		void flattenInstantly(float zDepth);
+
 		float alpha, xalpha;
 		float particle_damping;
 		float particle_size;

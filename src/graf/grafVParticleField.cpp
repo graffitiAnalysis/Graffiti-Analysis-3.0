@@ -119,13 +119,11 @@ void grafVParticleField::setParticleSize( float val )
 	
 }
 
-void grafVParticleField::update( ofPoint pt, ofPoint vel, float dt, bool bReset)
+void grafVParticleField::update( ofPoint pt, ofPoint vel, float dt, bool bReset, float centerZ)
 {
 	
-	
-	
 	//if(vel.x == 0 && vel.y == 0 ) 
-	float zdepth	= pt.z;
+	float zdepth = pt.z;//centerZ;
 	
     PS.update(dt*100,zdepth, alpha*particle_alpha, bReset);
 	
@@ -138,7 +136,7 @@ void grafVParticleField::update( ofPoint pt, ofPoint vel, float dt, bool bReset)
 	
 	vel.x = dt;
 	//if(!bReset)
-		VF.update( pt, vel, h, w, h);
+	VF.update( pt, vel, h, w, h);
 	
 	
 }
@@ -228,5 +226,16 @@ void grafVParticleField::draw( float zdepth, int screenW, int screenH )
 	//glDisable(GL_DEPTH_TEST);
 	
 	
+	
+}
+
+
+void grafVParticleField::flattenInstantly( float zDepth ){
+	
+	for( int j= 0; j< PS.numParticles; j++){
+		PS.pos[j][2] = zDepth;
+		PS.stopPos[j][2]  = zDepth;
+		PS.stopVec[j][2]  = zDepth;
+	}
 	
 }

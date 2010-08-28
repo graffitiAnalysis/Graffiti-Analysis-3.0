@@ -174,7 +174,7 @@ void grafLineDrawer::setupUniform(vector<timePt> pts, float lineDist, int start,
 
 void grafLineDrawer::calculatePoint(timePt pt, float time_num, float dist, float angle, vector<ofPoint>&left, vector<ofPoint>&right)
 {
-    dist = MAX(dist,.0001);
+    dist = MAX(dist,.01);
 	
     float left_x,left_y,right_x,right_y;
 	

@@ -408,3 +408,15 @@ void grafDrawer::alterZDepth( grafTagMulti * myTag)
 		}
 	}
 }
+
+
+void grafDrawer::flattenInstantly(float zDepth){
+	for( int i = 0; i < lines.size(); i++){
+		for( int j = 0; j < lines[i]->pts_l.size(); j++){
+			lines[i]->pts_l[j].z	= zDepth;
+			lines[i]->pts_r[j].z	= zDepth;
+			lines[i]->pts_lout[j].z = zDepth;
+			lines[i]->pts_rout[j].z = zDepth;
+		}
+	}
+}

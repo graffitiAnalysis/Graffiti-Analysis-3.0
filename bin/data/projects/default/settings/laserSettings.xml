@@ -1,5 +1,5 @@
 <useLaser>
-    <val_0>1.000000</val_0>
+    <val_0>0.000000</val_0>
 </useLaser>
 <bCamera>
     <val_0>0.000000</val_0>
@@ -11,7 +11,7 @@
     <val_0>0.000000</val_0>
 </bShowPanel>
 <laserMode>
-    <val_0>0.000000</val_0>
+    <val_0>1.000000</val_0>
 </laserMode>
 <whichCamera>
     <val_0>2.666667</val_0>
@@ -35,7 +35,7 @@
     <val_0>1.000000</val_0>
 </bAutoEndTag>
 <autoEndTime>
-    <val_0>2.200000</val_0>
+    <val_0>1.511111</val_0>
 </autoEndTime>
 <nFramesNewStroke>
     <val_0>12.000000</val_0>
@@ -52,3 +52,153 @@
 <laserSlowRate>
     <val_0>0.980000</val_0>
 </laserSlowRate>
+<LOAD_TAGS>
+    <val_0>0.000000</val_0>
+</LOAD_TAGS>
+<AUTO_LOAD>
+    <val_0>1.000000</val_0>
+</AUTO_LOAD>
+<space>
+    <val_0>0.000000</val_0>
+</space>
+<use_audio>
+    <val_0>1.000000</val_0>
+</use_audio>
+<use_arch>
+    <val_0>0.000000</val_0>
+</use_arch>
+<use_rb>
+    <val_0>0.000000</val_0>
+</use_rb>
+<PLAY>
+    <val_0>0.000000</val_0>
+</PLAY>
+<FULL_SCREEN>
+    <val_0>0.000000</val_0>
+</FULL_SCREEN>
+<ROTATE>
+    <val_0>1.000000</val_0>
+</ROTATE>
+<ROT_SPEED>
+    <val_0>0.650000</val_0>
+</ROT_SPEED>
+<wait_time>
+    <val_0>30.000000</val_0>
+</wait_time>
+<SHOW_NAME>
+    <val_0>0.000000</val_0>
+</SHOW_NAME>
+<SHOW_TIME>
+    <val_0>0.000000</val_0>
+</SHOW_TIME>
+<save_Tag_pos>
+    <val_0>0.000000</val_0>
+</save_Tag_pos>
+<LINE_ALPHA>
+    <val_0>0.920000</val_0>
+</LINE_ALPHA>
+<LINE_WIDTH>
+    <val_0>2.000000</val_0>
+</LINE_WIDTH>
+<LINE_SCALE>
+    <val_0>0.050000</val_0>
+</LINE_SCALE>
+<P_SIZE>
+    <val_0>2.000000</val_0>
+</P_SIZE>
+<P_ALPHA>
+    <val_0>0.750000</val_0>
+</P_ALPHA>
+<P_DAMP>
+    <val_0>0.150000</val_0>
+</P_DAMP>
+<P_NUM>
+    <val_0>1.000000</val_0>
+</P_NUM>
+<USE_GRAVITY>
+    <val_0>1.000000</val_0>
+</USE_GRAVITY>
+<USE_MASK>
+    <val_0>0.000000</val_0>
+</USE_MASK>
+<Z_DEPTH>
+    <val_0>16.000000</val_0>
+</Z_DEPTH>
+<Z_ALL>
+    <val_0>0.000000</val_0>
+</Z_ALL>
+<outward_amp_force>
+    <val_0>8.000000</val_0>
+</outward_amp_force>
+<particle_size_force>
+    <val_0>22.000000</val_0>
+</particle_size_force>
+<wave_deform_force>
+    <val_0>1.000000</val_0>
+</wave_deform_force>
+<bounce_force>
+    <val_0>0.250000</val_0>
+</bounce_force>
+<drop_p_thresh>
+    <val_0>0.100000</val_0>
+</drop_p_thresh>
+<use_p_amp>
+    <val_0>1.000000</val_0>
+</use_p_amp>
+<use_p_size>
+    <val_0>1.000000</val_0>
+</use_p_size>
+<use_wave_deform>
+    <val_0>1.000000</val_0>
+</use_wave_deform>
+<use_bounce>
+    <val_0>1.000000</val_0>
+</use_bounce>
+<use_drop>
+    <val_0>1.000000</val_0>
+</use_drop>
+<new_structure>
+    <val_0>0.000000</val_0>
+</new_structure>
+<arch_done>
+    <val_0>0.000000</val_0>
+</arch_done>
+<arch_save>
+    <val_0>0.000000</val_0>
+</arch_save>
+<arch_load>
+    <val_0>0.000000</val_0>
+</arch_load>
+<arch_clear>
+    <val_0>0.000000</val_0>
+</arch_clear>
+<show_drawing_tool>
+    <val_0>0.000000</val_0>
+</show_drawing_tool>
+<show_image>
+    <val_0>1.000000</val_0>
+</show_image>
+<box_mass>
+    <val_0>1.000000</val_0>
+</box_mass>
+<box_bounce>
+    <val_0>0.530000</val_0>
+</box_bounce>
+<box_friction>
+    <val_0>0.410000</val_0>
+</box_friction>
+<gravity>
+    <val_0>6.000000</val_0>
+</gravity>
+<load_warping>
+    <val_0>0.000000</val_0>
+</load_warping>
+<save_warping>
+    <val_0>0.000000</val_0>
+</save_warping>
+<reset_warping>
+    <val_0>0.000000</val_0>
+</reset_warping>
+<toggle_fbo_preview>
+    <val_0>0.000000</val_0>
+</toggle_fbo_preview>

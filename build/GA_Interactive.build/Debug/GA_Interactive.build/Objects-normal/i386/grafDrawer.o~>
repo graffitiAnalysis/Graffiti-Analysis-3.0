@@ -1,1 +1,1 @@
-i686-apple-darwin9-gcc-4.0.1: -lpthread: linker input file unused because linking not done
+/Users/chris/Documents/openFrameworks/of_preRelease_v0061_osxSL_FAT/apps/graffitiAnalysis_3.0/GA_3.0/src/../src/graf/grafDrawer.cpp:413: error: no 'void grafDrawer::flattenInstantly(float)' member function declared in class 'grafDrawer'

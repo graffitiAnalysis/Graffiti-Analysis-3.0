@@ -140,5 +140,13 @@ void testApp::audioReceived(float * input, int bufferSize, int nChannels){
 			memcpy(grafInteractiveApp.audio.audioInput, input, sizeof(float) * (NUM_BANDS));
 			grafInteractiveApp.audio.bufferCounter++;
 		}
+	}else if( manager.mode == GA_MODE_LASER && grafLaserApp.bSetup)
+	{
+		// samples are "interleaved"
+		if(grafLaserApp.audio.bSetup && grafLaserApp.bUseAudio)
+		{
+			memcpy(grafLaserApp.audio.audioInput, input, sizeof(float) * (NUM_BANDS));
+			grafLaserApp.audio.bufferCounter++;
+		}
 	}
 }

@@ -222,7 +222,7 @@ void GrafPlayerApp::updateParticles()
 	if( lastPoint <= 0 )			myTagPlayer.bReset = true;
 	if( tags[currentTagID].myStrokes[ lastStroke].pts.size()-1 == lastPoint ) myTagPlayer.bReset = true;
 	
-	particleDrawer.update( myTagPlayer.getCurrentPoint(),myTagPlayer.getVelocityForTime(&tags[currentTagID]),  dt,  myTagPlayer.bReset);
+	particleDrawer.update( myTagPlayer.getCurrentPoint(),myTagPlayer.getVelocityForTime(&tags[currentTagID]),  dt,  myTagPlayer.bReset, tags[currentTagID].center.z);
 	
 	myTagPlayer.bReset = false; // important so no particle error on first stroke
 	prevStroke		= myTagPlayer.getCurrentStroke();	
@@ -777,7 +777,7 @@ void GrafPlayerApp::mousePressed(ofMouseEventArgs & event ){
 	if(bUseArchitecture)
 	{
 		if( panel.isMouseInPanel(event.x, event.y) ) archPhysics.pGroup.disableAll(true);
-		else if( panel.getSelectedPanelName() == "Architecture Drawing") archPhysics.pGroup.reEnableLast();
+		else if( panel.getSelectedPanelName() == "Architecture Settings") archPhysics.pGroup.reEnableLast();
 	}
 	
 	if(bUseAudio)

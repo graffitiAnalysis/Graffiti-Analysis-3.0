@@ -22,7 +22,8 @@ class grafDrawer
 		void transitionBounce( float dt, float avg );
 		void transitionFlatten( float zDepth, float timeToDoIt );
 		void resetTransitions();
-		
+		void flattenInstantly(float zDepth);
+
 		void average( float pct );
 		void setAlpha(float a);
 		void setLineScale( float val );
