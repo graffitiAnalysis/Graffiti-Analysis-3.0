@@ -14,10 +14,10 @@
     <val_0>0.000000</val_0>
 </FULL_SCREEN>
 <LINE_ALPHA>
-    <val_0>1.000000</val_0>
+    <val_0>0.977778</val_0>
 </LINE_ALPHA>
 <LINE_WIDTH>
-    <val_0>2.000000</val_0>
+    <val_0>1.000000</val_0>
 </LINE_WIDTH>
 <P_SIZE>
     <val_0>4.277778</val_0>
@@ -26,7 +26,7 @@
     <val_0>0.838889</val_0>
 </P_ALPHA>
 <P_DAMP>
-    <val_0>0.150000</val_0>
+    <val_0>0.136111</val_0>
 </P_DAMP>
 <P_NUM>
     <val_0>1.000000</val_0>
@@ -68,7 +68,7 @@
     <val_0>1.000000</val_0>
 </use_p_size>
 <ROT_SPEED>
-    <val_0>0.755556</val_0>
+    <val_0>0.666667</val_0>
 </ROT_SPEED>
 <p_audio_damp>
     <val_0>1.000000</val_0>
@@ -83,7 +83,7 @@
     <val_0>0.000000</val_0>
 </line_width_force>
 <wait_time>
-    <val_0>37.333336</val_0>
+    <val_0>11.333334</val_0>
 </wait_time>
 <use_wave_deform>
     <val_0>1.000000</val_0>
@@ -101,7 +101,7 @@
     <val_0>0.533333</val_0>
 </bounce_force>
 <show_drawing_tool>
-    <val_0>0.000000</val_0>
+    <val_0>1.000000</val_0>
 </show_drawing_tool>
 <new_structure>
     <val_0>0.000000</val_0>
@@ -137,10 +137,10 @@
     <val_0>0.410000</val_0>
 </box_friction>
 <use_audio>
-    <val_0>1.000000</val_0>
+    <val_0>0.000000</val_0>
 </use_audio>
 <use_arch>
-    <val_0>1.000000</val_0>
+    <val_0>0.000000</val_0>
 </use_arch>
 <gravity>
     <val_0>6.000000</val_0>
@@ -164,7 +164,7 @@
     <val_0>5.000000</val_0>
 </eye_dist>
 <Z_DEPTH>
-    <val_0>16.000000</val_0>
+    <val_0>12.000000</val_0>
 </Z_DEPTH>
 <Z_ALL>
     <val_0>0.000000</val_0>
@@ -186,5 +186,8 @@
     <val_0>0.000000</val_0>
 </LOAD_RSS>
 <red_on_right>
-    <val_0>1.000000</val_0>
+    <val_0>0.000000</val_0>
 </red_on_right>
+<max_arch_time>
+    <val_0>3.000000</val_0>
+</max_arch_time>

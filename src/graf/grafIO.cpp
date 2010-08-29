@@ -4,8 +4,8 @@
 grafIO::grafIO()
 {
    	uniquID		= "";
-	clientname  = "";
-	version		= "";
+	clientname  = "Graffiti Analysis";
+	version		= "3.0";
 	
 	
 	
@@ -22,6 +22,10 @@ void grafIO::setup(string uId, string client, string vers)
 	uniquID		= uId;
 	clientname  = client;
 	version		= vers;
+	
+	ofxXmlSettings xml;
+	xml.loadFile("appSettings.xml");
+	username = xml.getValue("username","Graffiti Analysis 3.0");
 }
 
 void grafIO::addKeyword( string keywd )
@@ -132,13 +136,18 @@ void grafIO::loadTag(string gmlFile, grafTagMulti * tag)
 	xml.popTag();	
 }
 
+void  grafIO::saveTag(string path)
+{
+	xml.saveFile(path);
+}
+
 void grafIO::constructGML(grafTagMulti * tag)
 {
 	
 	xml.clear();
 	
 	xml.addTag("GML");
-	//xml.addAttribute("GML","spec","0.1b",0);
+	xml.addAttribute("GML","spec","1.0",0);
 	
 	xml.pushTag("GML");
 	//---------------------
@@ -151,11 +160,23 @@ void grafIO::constructGML(grafTagMulti * tag)
 		xml.pushTag("client");
 			xml.setValue("name", clientname);
 			xml.setValue("version", version);
-			xml.setValue("username", "dustTag");
-			xml.setValue("keywords", keywords);
-			xml.setValue("uniqueKey", uniquID);
+			xml.setValue("username", username);
+			//xml.setValue("keywords", keywords);
+			//xml.setValue("uniqueKey", uniquID);
 		xml.popTag();
+		
+		xml.addTag("environment");
+		xml.pushTag("environment");
+			xml.addTag("up");
+			xml.setValue("up:x", 0.0);
+			xml.setValue("up:y", 1.0);
+			xml.setValue("up:z", 0.0);
+		xml.popTag();
+	
 	xml.popTag();
+	
+	
+	
 	
 	xml.addTag("drawing");
 	xml.pushTag("drawing");

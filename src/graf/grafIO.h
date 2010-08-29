@@ -19,10 +19,11 @@ class grafIO
 		
 		// for loading
 		void loadTag(string name, grafTagMulti * tag);
-		
+		void saveTag(string path);
 		
 		ofxXmlSettings		xml;
 		
+		string username;
 		string uniquID;
 		string clientname;
 		string version;

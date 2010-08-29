@@ -111,6 +111,7 @@ class GrafPlayerApp{
 		GrafArchitecture		archPhysics;		// physics / architecture effects
 		void createWarpedArchitecture();
 		vector<polySimple> wPolys;
+		float					archPDropTime;
 
 		//---------- audio particle effects
 		DropParticles	drops;

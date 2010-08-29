@@ -1,3 +1,10 @@
 <grafArchitecture>
-    <structure type="line" bClosed="0"></structure>
+    <structure type="line" bClosed="0">
+        <pt x="195.000000" y="513.000000"></pt>
+        <pt x="263.000000" y="605.000000"></pt>
+        <pt x="270.000000" y="684.000000"></pt>
+        <pt x="402.000000" y="684.000000"></pt>
+        <pt x="500.000000" y="688.000000"></pt>
+        <pt x="586.000000" y="711.000000"></pt>
+    </structure>
 </grafArchitecture>

@@ -23,8 +23,8 @@ void GrafPlayerApp::setup(){
 
 	
 	ofxXmlSettings xmlUser;
-	xmlUser.loadFile("projects/user.xml");
-	string username = xmlUser.getValue("params:user","default");
+	xmlUser.loadFile("appSettings.xml");
+	string username = xmlUser.getValue("project_folder","default");
 	
 	pathToSettings = "projects/"+username+"/settings/";//"settings/default/";
 	myTagDirectory = "projects/"+username+"/tags/";
@@ -38,9 +38,7 @@ void GrafPlayerApp::setup(){
 
 	screenW			= ofGetWidth();
 	screenH			= ofGetHeight();
-	//loadScreenSettings();
 	
-
 	mode			= PLAY_MODE_LOAD;
 	lastX			= 0;
 	lastY			= 0;
@@ -110,6 +108,8 @@ void GrafPlayerApp::setup(){
 		archPhysics.setup(screenW,screenH);
 	#endif
 	
+	archPDropTime = 0;
+	
 	if(bUseArchitecture)
 	{
 		archPhysics.archImage.loadImage(pathToSettings+"arch.jpg");
@@ -128,6 +128,9 @@ void GrafPlayerApp::setup(){
 	}
 	
 	bSetup = true;
+	
+	
+	gIO.setup("0","Graffiti Analysis","3.0");
 	
 }
 
@@ -226,6 +229,9 @@ void GrafPlayerApp::updateParticles()
 	
 	myTagPlayer.bReset = false; // important so no particle error on first stroke
 	prevStroke		= myTagPlayer.getCurrentStroke();	
+	
+	particleDrawer.setDamping( panel.getValueF("P_DAMP") );
+
 }
 
 void GrafPlayerApp::updateTransition( int type)
@@ -257,7 +263,9 @@ void GrafPlayerApp::updateTransition( int type)
 		 if( drawer.prelimTransTime > panel.getValueI("wait_time") )
 		 {
 			
-			bRotating = false;
+			 if( archPhysics.bMakingParticles) archPDropTime += dt;
+			 
+			 bRotating = false;
 			
 			drawer.transitionFlatten( tags[currentTagID].center.z, 50);
 			particleDrawer.flatten( tags[currentTagID].center.z, 52);
@@ -276,12 +284,15 @@ void GrafPlayerApp::updateTransition( int type)
 			if(particleDrawer.xalpha  > 0 ) particleDrawer.xalpha -= .5*dt;
 			
 			// if all particles have fallen and 
-			if(archPhysics.bMadeAll)
+			float maxTimeToFall = panel.getValueI("max_arch_time");
+			if(archPhysics.bMadeAll  || (maxTimeToFall >= 0 && archPDropTime > maxTimeToFall) )
 			{
 				// do average transition
 				drawer.transition(dt,.15);
 				drawer.alpha -= .35*dt;
 				if(particleDrawer.alpha  > 0 ) particleDrawer.alpha -= .5*dt;
+				if(particleDrawer.xalpha  > 0 ) particleDrawer.xalpha -= .5*dt;
+
 			}
 			
 			
@@ -298,6 +309,8 @@ void GrafPlayerApp::updateTransition( int type)
 			drawer.transition(dt,.15);
 			if( bUseGravity ) particleDrawer.fall(dt);
 			if(particleDrawer.alpha  > 0 ) particleDrawer.alpha -= .5*dt;
+			if(particleDrawer.xalpha  > 0 ) particleDrawer.xalpha -= .5*dt;
+
 		}
 	}
 	
@@ -309,7 +322,6 @@ void GrafPlayerApp::updateAudio()
 	if(panel.getValueB("use_p_size") ) 
 		particleDrawer.updateParticleSizes(audio.ifftOutput,audio.averageVal, NUM_BANDS,panel.getValueF("particle_size_force") );
 	
-	particleDrawer.setDamping( panel.getValueF("P_DAMP") );
 	
 	if( /*drawer.prelimTransTime < panel.getValueI("wait_time")  &&*/ panel.getValueB("use_p_amp") ) 
 		particleDrawer.updateParticleAmpli(audio.ifftOutput,audio.averageVal, NUM_BANDS,panel.getValueF("outward_amp_force") );
@@ -365,7 +377,6 @@ void GrafPlayerApp::drawTagNormal(){
 	{
 	
 	//glViewport(tags[currentTagID].position.x,-tags[currentTagID].position.y,fbo.texData.width,fbo.texData.height);
-	glTranslatef(tags[currentTagID].position.x,tags[currentTagID].position.y,0);
 		
 		
 	ofEnableAlphaBlending();
@@ -373,6 +384,7 @@ void GrafPlayerApp::drawTagNormal(){
 
 	glPushMatrix();
 	
+	glTranslatef(tags[currentTagID].position.x,tags[currentTagID].position.y,0);
 	glTranslatef(screenW/2, screenH/2, 0);
 	glScalef(tags[currentTagID].position.z,tags[currentTagID].position.z,tags[currentTagID].position.z);
 	
@@ -420,7 +432,7 @@ void GrafPlayerApp::drawTagNormal(){
 	if(bUseArchitecture)
 	{
 		
-		glViewport(0,0,fbo.texData.width,fbo.texData.height);
+		//glViewport(0,0,fbo.texData.width,fbo.texData.height);
 		
 		// set translation in polygon tool so drwaing happens in correct place
 		archPhysics.offSetPre.x = (tags[currentTagID].position.x);
@@ -499,7 +511,7 @@ void GrafPlayerApp::draw(){
 			ofSetColor(255,255,255,255);
 			
 			fbo.drawWarped(0, 0,screenW, screenH,pWarper.u,pWarper.v,pWarper.num_x_sections,pWarper.num_y_sections);
-			fbo.drawWarped(screenW, 0,screenW, screenH,pWarper.u,pWarper.v,pWarper.num_x_sections,pWarper.num_y_sections);
+			//fbo.drawWarped(screenW, 0,screenW, screenH,pWarper.u,pWarper.v,pWarper.num_x_sections,pWarper.num_y_sections);
 			
 			/*if( modeDualScreen == GA_SCREENS_STACKED)
 			{
@@ -547,10 +559,10 @@ void GrafPlayerApp::drawStereoEye(float eyeDist)
 	if( mode == PLAY_MODE_PLAY )
 	{
 		
-		glViewport(tags[currentTagID].position.x,-tags[currentTagID].position.y,fbo.texData.width,fbo.texData.height);
+		//glViewport(tags[currentTagID].position.x,-tags[currentTagID].position.y,fbo.texData.width,fbo.texData.height);
 		
 		glPushMatrix();
-		
+			glTranslatef(tags[currentTagID].position.x,tags[currentTagID].position.y,0);
 			glTranslatef(screenW/2, screenH/2, 0);
 			
 			glTranslatef(eyeDist,0, 0);
@@ -597,7 +609,7 @@ void GrafPlayerApp::drawStereoEye(float eyeDist)
 		
 		if(bUseArchitecture)
 		{
-			glViewport(0,0,fbo.texData.width,fbo.texData.height);
+			//glViewport(0,0,fbo.texData.width,fbo.texData.height);
 				
 			// set translation in polygon tool so drwaing happens in correct place
 			archPhysics.offSetPre.x = (tags[currentTagID].position.x);
@@ -620,7 +632,7 @@ void GrafPlayerApp::drawControls()
 	// -- arch drawing tool
 	if(bUseArchitecture)
 	{
-		if( archPhysics.bDrawingActive || panel.getValueB("show_drawing_tool") )
+		if(  panel.getSelectedPanelName() == "Architecture Settings" && (archPhysics.bDrawingActive || panel.getValueB("show_drawing_tool")) )
 			archPhysics.drawTool();
 	}
 	
@@ -676,7 +688,6 @@ void GrafPlayerApp::keyPressed (ofKeyEventArgs & event){
   		case 'x': bShowPanel=!bShowPanel; break;
 		case 'p': 
 			myTagPlayer.bPaused = !myTagPlayer.bPaused;
-			//bRotating = !myTagPlayer.bPaused;
 			panel.setValueB("ROTATE",bRotating);
 			panel.setValueB("PLAY",!myTagPlayer.bPaused);
 			break;
@@ -685,7 +696,8 @@ void GrafPlayerApp::keyPressed (ofKeyEventArgs & event){
 		case OF_KEY_RIGHT:  resetPlayer(1); break;
         case OF_KEY_LEFT:   resetPlayer(-1); break;
 		
-		case 's': bTakeScreenShot = true; break;
+		case 'S': saveTagPositions(); break;
+		case 's': saveAllTagPositions(); break;
 			
 		case 'R':
 			tags[currentTagID].rotation.set(0,0,0);
@@ -694,8 +706,14 @@ void GrafPlayerApp::keyPressed (ofKeyEventArgs & event){
 			tagPosVel.set(0,0,0);
 			break;
 		case OF_KEY_RETURN:
-			if( panel.getSelectedPanelName() == "Architecture Drawing" )
+			if( panel.getSelectedPanelName() == "Architecture Settings" )
 				archPhysics.pGroup.addPoly();
+			break;
+		case 'z':
+			if(tags.size()>0){
+			 tags[currentTagID].rotation.set(0,0,0);
+			 tags[currentTagID].position.set(0,0,1);
+			}
 			break;
 		default:
   			break;
@@ -738,9 +756,9 @@ void GrafPlayerApp::mouseDragged(ofMouseEventArgs & event ){
 	
 	bool bMoveTag = true;
 	
-	if( panel.isMouseInPanel(event.x, event.y) )						bMoveTag = false;
+	if( !panel.minimize && bShowPanel && panel.isMouseInPanel(event.x, event.y) )						bMoveTag = false;
 	//else if( keypanel.isMouseInPanel(event.x, event.y) )				bMoveTag = false;
-	else if( panel.getSelectedPanelName() == "Architecture Drawing")	bMoveTag = false;
+	else if( panel.getSelectedPanelName() == "Architecture Settings")	bMoveTag = false;
 	else if( pWarper.isEditing() && pWarper.getMouseIndex() != -1)		bMoveTag = false;
 	else if(panel.getSelectedPanelName() == "Audio Settings" && audio.panel.isMouseInPanel(event.x, event.y) )				bMoveTag = false;
 	
@@ -830,6 +848,9 @@ void GrafPlayerApp::resetPlayer( int next)
 	prevStroke = 0;
 	
 	if(bRotating) bRotating = true;
+	
+	archPDropTime = 0;
+
 	
 }
 //--------------------------------------------------------------
@@ -1031,7 +1052,7 @@ void GrafPlayerApp::setupControlPanel()
 	panel.addSlider("bounce","box_bounce",.53,0,2,false);
 	panel.addSlider("friction","box_friction",.41,0,2,false);
 	panel.addSlider("gravity","gravity",6,0,20,false);
-	
+	panel.addSlider("max time to fall","max_arch_time",5,-1,10,false);
 	
 	//--- fbo settings	
 	panel.setWhichPanel("FBO Warper");
@@ -1062,10 +1083,13 @@ void GrafPlayerApp::setupControlPanel()
 	keypanel.addText("Key Commands:","K");
 	keypanel.addText("x: toggle control panel","x");
 	keypanel.addText("p: pause/play","p");
-	keypanel.addText("s: screen capture","s");
+	//keypanel.addText("s: screen capture","s");
 	keypanel.addText("m: toggle mouse","m");
 	keypanel.addText("f: toggle fullscreen","f");
 	keypanel.addText("R: reset pos/rot","R");
+	keypanel.addText("s: save ALL tags","s");
+	keypanel.addText("S: save current tag","s");
+	keypanel.addText("z: reset tag pos/rot","z");
 	keypanel.addText("arrows: next/prev","arrows");
 	keypanel.addText("esc: quit","esc");
 	keypanel.addText("L mouse: alter position","lm");
@@ -1113,7 +1137,6 @@ void GrafPlayerApp::updateControlPanel(bool bUpdateAll)
 		if( panel.getValueB("save_Tag_pos") )
 		{
 			panel.setValueB("save_Tag_pos",false);
-			//saveTagPositions();
 			saveAllTagPositions();
 		}
 

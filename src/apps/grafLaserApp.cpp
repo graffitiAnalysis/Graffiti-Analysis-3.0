@@ -30,17 +30,15 @@ GrafLaserApp::~GrafLaserApp()
 
 void GrafLaserApp::setup()
 {
-	bSetup = true;
-	bEnabled = true;
-
+	
 	//-- laser specific
 	smoothX			= 0.0;
 	smoothY			= 0.0;
 	
 	//--- user settings
 	ofxXmlSettings xmlUser;
-	xmlUser.loadFile("projects/user.xml");
-	string username = xmlUser.getValue("params:user","default");
+	xmlUser.loadFile("appSettings.xml");
+	string username = xmlUser.getValue("project_folder","default");
 	
 	pathToSettings = "projects/"+username+"/settings/";//"settings/default/";
 	myTagDirectory = "projects/"+username+"/tags/";
@@ -84,9 +82,9 @@ void GrafLaserApp::setup()
 	fbo.allocate(screenW,screenH );
 	
 	//--- warper
-	pWarper.initWarp( screenW,screenH,screenW*WARP_DIV,screenH*WARP_DIV );
-	pWarper.recalculateWarp();
-	pWarper.loadFromXml(pathToSettings+"warper.xml");
+	//pWarper.initWarp( screenW,screenH,screenW*WARP_DIV,screenH*WARP_DIV );
+	//pWarper.recalculateWarp();
+	//pWarper.loadFromXml(pathToSettings+"warper.xml");
 	
 	//--- audio
 	audio.setup();
@@ -102,19 +100,25 @@ void GrafLaserApp::setup()
 	}
 	
 	//--- red blue stuff
-	fboLeft.allocate(screenW,screenH );
-	fboRight.allocate(screenW,screenH );
+	//fboLeft.allocate(screenW,screenH );
+	//fboRight.allocate(screenW,screenH );
 	
 	grafTagMulti temptTag;
 	tags.push_back( temptTag );
 	
 	lastTime = ofGetElapsedTimef();
 	
+	//--- saving tags
+	gIO.setup("0","Graffiti Analysis","3.0");
+	
 	//---
 	bSetup = true;
-	
+	bEnabled = true;
+
 	panel.setSelectedPanel("Laser Tracker");
 	
+	
+
 }
 
 /*void GrafLaserApp::update()
@@ -133,6 +137,8 @@ void GrafLaserApp::update(){
 	dt  = ofGetElapsedTimef()-lastTime;
 	lastTime  = ofGetElapsedTimef();
 	
+	int lastMode = mode;
+	
 	if( panel.getValueB("useLaser") ){
 		if( panel.getValueB("bUseClearZone") ){
 			laserTracker.setUseClearZone(true);			
@@ -150,6 +156,7 @@ void GrafLaserApp::update(){
 		mode = PLAY_MODE_PLAY;
 	}
 	
+	if( mode == PLAY_MODE_PLAY && mode != lastMode ) saveTag();
 	
 	bool bTrans = false;
 	if( currentTagID >= tags.size() ){
@@ -609,14 +616,14 @@ void GrafLaserApp::setupControlPanel()
 	
 	//---- application sttings
 	panel.setWhichPanel("App Settings");
-	panel.addToggle("Load tags", "LOAD_TAGS", false);
-	panel.addToggle("Auto load on start", "AUTO_LOAD", true);
-	panel.addSpace();
+	//panel.addToggle("Load tags", "LOAD_TAGS", false);
+	//panel.addToggle("Auto load on start", "AUTO_LOAD", true);
+	//panel.addSpace();
 	
 	panel.addToggle("Use Audio", "use_audio",true);
 	//panel.addToggle("Use Architecture", "use_arch",true);
 	//panel.addToggle("Use Red / Blue", "use_rb",true);
-	panel.addSpace();
+	//panel.addSpace();
 	
 	panel.addToggle("Play / Pause", "PLAY", true);
 	panel.addToggle("FullScreen", "FULL_SCREEN", false);
@@ -624,7 +631,7 @@ void GrafLaserApp::setupControlPanel()
 	panel.addSlider("Rotation Speed","ROT_SPEED",.65,0,4,false);
 	panel.addSlider("Change wait time","wait_time",30,0,120,true);
 	//panel.addToggle("Display filename", "SHOW_NAME", true);
-	panel.addToggle("Display time", "SHOW_TIME", true);
+	//panel.addToggle("Display time", "SHOW_TIME", true);
 	//panel.addToggle("Save Tag Position/Rotation", "save_Tag_pos", false);
 	//panel.addSpace();
 	
@@ -806,7 +813,7 @@ bool GrafLaserApp::checkLaserActive(){
 		if( panel.getValueB("bCamera") ){
 			laserTracker.setupCamera( panel.getValueI("whichCamera"), 320, 240);
 		}else{
-			laserTracker.setupVideo("laserTestVideo.mov");
+			laserTracker.setupVideo("video/laserTestVideo.mov");
 		}
 	}
 	
@@ -1053,4 +1060,20 @@ void GrafLaserApp::nextTag(int dir)
 	
 	//cout << "total pts this tag " << tags[currentTagID].getNPts() << endl;
 	
+}
+
+
+void GrafLaserApp::saveTag()
+{
+	string filename = myTagDirectory+"laser_"+getTimeString()+".gml";
+	//pathToSettings = "projects/"+username+"/settings/";//"settings/default/";
+	//myTagDirectory = "projects/"+username+"/tags/";
+	gIO.constructGML(&tags[currentTagID] );
+	gIO.saveTag(filename);
+}
+
+
+string GrafLaserApp::getTimeString()
+{
+	return ofToString( ofGetDay() ) + "_" + ofToString( ofGetMonth() )  + "_" + ofToString( ofGetYear() )  + "_" + ofToString( ofGetHours() )  + "_" + ofToString( ofGetMinutes() )  + "_" + ofToString( ofGetSeconds() ); 
 }

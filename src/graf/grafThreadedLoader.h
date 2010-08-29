@@ -101,6 +101,7 @@ class GaThreadedLoader : public ofxThread{
 		vector<string>			filenames;				// list of corresponding file names (sans .gml)
 		string					nxtFileToLoad;
 		string					nxtFileName;
+		string					rssUrl;
 		
 		grafIO gIO;					// gml loader/saver
 		

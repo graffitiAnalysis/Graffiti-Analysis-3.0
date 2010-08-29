@@ -1,0 +1,8 @@
+<!-- user name saved in gml tags -->
+<username>Graffiti Analysis</username>
+
+<!-- folder from which project settings are loaded (must be in "projects") -->
+<project_folder>default</project_folder>
+
+<!-- url to load rss keyword tags -->
+<rss_url>http://000000book.com/data.rss?keywords=</rss_url>

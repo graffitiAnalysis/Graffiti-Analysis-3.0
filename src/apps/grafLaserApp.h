@@ -48,7 +48,10 @@ class GrafLaserApp{
 		
 		void enable(){ bEnabled = true; }
 		void disable(){ bEnabled = false; }
-	
+		
+		void saveTag();
+		string getTimeString();
+
 		ofxControlPanel		panel;
 		bool	bSetup;
 		bool	bUseAudio;
@@ -92,8 +95,6 @@ class GrafLaserApp{
 		void updateControlPanel(bool bUpdateAll = false);
 		string getCurrentTagName();
 
-		
-	
 		//---------- interactive architecture
 		//void createWarpedArchitecture();
 		GrafArchitecture		archPhysics;		// physics / architecture effects
@@ -108,6 +109,7 @@ class GrafLaserApp{
 		float	z_const;
 		bool	bUseGlobalZ;
 		int		lastUpdatedZ;
+		grafIO	gIO;
 		
 		//---------- player to animate the tag 
 		grafPlayer	myTagPlayer;						// manages playback of tag in time
@@ -127,8 +129,8 @@ class GrafLaserApp{
 		//---------- fbo + warping
 		ofxFBOTexture		fbo;
 		PerspectiveWarper	pWarper;
-		ofxFBOTexture		fboLeft;
-		ofxFBOTexture		fboRight;
+		//ofxFBOTexture		fboLeft;
+		//ofxFBOTexture		fboRight;
 	
 	
 		//---------- application settings

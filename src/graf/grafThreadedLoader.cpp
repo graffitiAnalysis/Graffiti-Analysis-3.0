@@ -20,6 +20,8 @@ GaThreadedLoader::GaThreadedLoader()
 	bDownloadedFiles = false;
 
 	threadMode = 0;
+	
+	rssUrl = "http://000000book.com/data.rss?keywords=";
 }
 
 GaThreadedLoader::~GaThreadedLoader()
@@ -38,7 +40,16 @@ void GaThreadedLoader::setup(string dirPath)
 	bSetup = true;
 	bUseRss = false;
 	threadMode = 0;
-
+	
+	ofxXmlSettings xml;
+	if( xml.loadFile("appSettings.xml") )
+	{
+		rssUrl = xml.getValue("rss_url", rssUrl);
+	}
+	
+	if(totalLoaded > 0) delete [] tags;
+	totalLoaded = 0;
+	//totalToLoad = 0;
 }
 
 void GaThreadedLoader::setup(vector<string> nfilesToLoad,vector<string> nfilenames)
@@ -63,6 +74,9 @@ void GaThreadedLoader::setup(string keyword, string directory)
 	bHaveDirs	= false;
 	bUseRss		= true;
 	bDownloadedFiles = false;
+	
+	if(totalLoaded > 0) delete [] tags;
+	totalLoaded = 0;
 }
 
 void GaThreadedLoader::update()
@@ -191,13 +205,14 @@ void GaThreadedLoader::getDirectoryInfo(string myTagDirectory)
 	int totalBefore = totalToLoad;
 	totalToLoad = filesToLoad.size();
 	
-	if( totalBefore > 0 && totalBefore < totalToLoad )
+	/*if( totalBefore > 0 && totalBefore < totalToLoad )
 	{
 		totalBefore = 0;
 		delete [] tags;
 	}
-	
-	if( totalBefore <= 0 ) tags = new grafTagMulti[totalToLoad];
+	*/
+	if( totalToLoad > 0 )
+		tags = new grafTagMulti[totalToLoad];
 }
 
 
@@ -213,7 +228,7 @@ void GaThreadedLoader::loadTagsFromRSS( string thisword, string myTagDirectory )
 		//	std::string thisword = "Rudy"; 
 		
 		//get RSS
-		std::string thisuri = "http://000000book.com/data.rss?keywords=";//"http://www.tpolm.org/~ps/crawl/gmlrss.php?keywords=";
+		std::string thisuri = rssUrl;	//"http://000000book.com/data.rss?keywords=";
 		thisuri.append(thisword);
 		std::cout << thisuri << std::endl;
 		URI uri(thisuri);
