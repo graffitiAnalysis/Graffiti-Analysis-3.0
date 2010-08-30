@@ -1,0 +1,45 @@
+Graffiti Analysis 3.0 by Evan Roth.
+
+Software development by Chris Sugrue.
+Laser input integration by Theo Watson.
+Complies with all <GML> standards.
+GNU General Public License.
+
+graffitianalysis.com
+
+//--------------------------------------------------------//
+Application Modes:
+
+Playback: Graffiti Analysis player that loads gml tags from local folder or rss feed.
+
+Laser Input: Graffiti Analysis recording and playback with laser pointer tracking.
+
+//--------------------------------------------------------//
+Playback:
+
+.gml tags should be saved locally in:
+data/projects/(username)/tags
+
+user name for the current project can altered in 
+data/projects/user.xml
+
+new project folders MUST include a "tags" and "settings" subdirectory
+ 
+Key controls:
+
+F1: return to startup screen
+f: toggle fullscreen on/off
+x: toggle control panels on/off
+p: pause/play playback
+m: toggle mouse on/off
+R: reset tag position and rotation
+s: save all tag position / rotation changes
+S: change current tag position / rotation changes
+arrows (right and left): next or previous tag
+esc: quit application
+left-mouse drag: change tag position
+left-mouse + shift: zoom tag
+right-mouse: rotate in y-axis
+right-mouse + shift: rotate x-axis
+
+

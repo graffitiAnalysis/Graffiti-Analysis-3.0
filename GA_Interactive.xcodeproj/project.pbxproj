@@ -14,7 +14,6 @@
 		832AF6A411B0245900E10D66 /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 832AF6A111B0245900E10D66 /* kiss_fft.c */; };
 		8377A08D11C2262B002F3ABE /* perspectiveWarper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8377A08C11C2262B002F3ABE /* perspectiveWarper.cpp */; };
 		837A63C711B1480100E5E931 /* statsRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 837A63C611B1480100E5E931 /* statsRecorder.cpp */; };
-		837A63CB11B1483D00E5E931 /* ofxFileDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 837A63CA11B1483D00E5E931 /* ofxFileDialog.cpp */; };
 		837A643011B296D000E5E931 /* dropParticles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 837A642F11B296D000E5E931 /* dropParticles.cpp */; };
 		837A732A11B9663400E5E931 /* ofxQtVideoSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 837A732811B9663400E5E931 /* ofxQtVideoSaver.cpp */; };
 		8383131B1221BEE100EBDD62 /* gaManagerApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8383131A1221BEE100EBDD62 /* gaManagerApp.cpp */; };
@@ -207,8 +206,6 @@
 		8377A08C11C2262B002F3ABE /* perspectiveWarper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = perspectiveWarper.cpp; path = src/utils/perspectiveWarper.cpp; sourceTree = "<group>"; };
 		837A63C511B1480100E5E931 /* statsRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = statsRecorder.h; path = src/utils/statsRecorder.h; sourceTree = "<group>"; };
 		837A63C611B1480100E5E931 /* statsRecorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = statsRecorder.cpp; path = src/utils/statsRecorder.cpp; sourceTree = "<group>"; };
-		837A63C911B1483D00E5E931 /* ofxFileDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxFileDialog.h; path = src/utils/ofxFileDialog.h; sourceTree = "<group>"; };
-		837A63CA11B1483D00E5E931 /* ofxFileDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxFileDialog.cpp; path = src/utils/ofxFileDialog.cpp; sourceTree = "<group>"; };
 		837A642E11B296D000E5E931 /* dropParticles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dropParticles.h; sourceTree = "<group>"; };
 		837A642F11B296D000E5E931 /* dropParticles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dropParticles.cpp; sourceTree = "<group>"; };
 		837A732811B9663400E5E931 /* ofxQtVideoSaver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxQtVideoSaver.cpp; sourceTree = "<group>"; };
@@ -935,8 +932,6 @@
 				837A732611B9663400E5E931 /* ofxMovieSaver */,
 				837A63C511B1480100E5E931 /* statsRecorder.h */,
 				837A63C611B1480100E5E931 /* statsRecorder.cpp */,
-				837A63C911B1483D00E5E931 /* ofxFileDialog.h */,
-				837A63CA11B1483D00E5E931 /* ofxFileDialog.cpp */,
 				83B10C4011AD57B80010F6B9 /* io */,
 				83B10BFE11AD555B0010F6B9 /* ofThreadedImage.h */,
 				83B10BFF11AD555B0010F6B9 /* ofThreadedImage.cpp */,
@@ -1611,12 +1606,12 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				83B10BE511AD550B0010F6B9 /* apps */,
+				83DDD57C118ED3F7007567E9 /* graf */,
 				838318EA1225BD3C00EBDD62 /* laserInput */,
 				838F541811BABA8900505713 /* architecture */,
 				83B10BF711AD55540010F6B9 /* physics */,
 				83B10BE611AD55100010F6B9 /* audio */,
-				83B10BE511AD550B0010F6B9 /* apps */,
-				83DDD57C118ED3F7007567E9 /* graf */,
 				83DDD57A118ED3E5007567E9 /* utils */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
@@ -1827,7 +1822,6 @@
 				832AF6A311B0245900E10D66 /* kiss_fftr.c in Sources */,
 				832AF6A411B0245900E10D66 /* kiss_fft.c in Sources */,
 				837A63C711B1480100E5E931 /* statsRecorder.cpp in Sources */,
-				837A63CB11B1483D00E5E931 /* ofxFileDialog.cpp in Sources */,
 				837A643011B296D000E5E931 /* dropParticles.cpp in Sources */,
 				837A732A11B9663400E5E931 /* ofxQtVideoSaver.cpp in Sources */,
 				838F53BB11BAADD300505713 /* ofxFBOTexture.cpp in Sources */,

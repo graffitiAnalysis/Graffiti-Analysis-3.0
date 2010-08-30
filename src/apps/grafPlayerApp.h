@@ -14,7 +14,6 @@
 #include "ofxControlPanel.h"
 #include "ofxXmlSettings.h"
 #include "ofThreadedImage.h"
-#include "ofxFileDialog.h"
 #include "ofxFBOTexture.h"
 
 #include "audioAnalyzer.h"
@@ -174,12 +173,8 @@ class GrafPlayerApp{
 		bool				bTakeScreenShot;	
 		bool				bUseGravity;
 
-		
 		int					mode;				// current play mode PLAY_MODE_LOAD for loading, PLAY_MODE_PLAY for normal playback
 	
-		// files opening for audio
-		ofxFileDialog dialog;
-		vector <string> resultString;
 	
 		// path to files
 		string pathToSettings;

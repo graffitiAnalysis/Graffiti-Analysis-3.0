@@ -700,21 +700,18 @@ void GrafPlayerApp::keyPressed (ofKeyEventArgs & event){
 		case 's': saveAllTagPositions(); break;
 			
 		case 'R':
+			if(tags.size()>0){
 			tags[currentTagID].rotation.set(0,0,0);
 			tags[currentTagID].position.set(0,0,1);
 			rotationY = 0;
 			tagPosVel.set(0,0,0);
+			}
 			break;
 		case OF_KEY_RETURN:
 			if( panel.getSelectedPanelName() == "Architecture Settings" )
 				archPhysics.pGroup.addPoly();
 			break;
-		case 'z':
-			if(tags.size()>0){
-			 tags[currentTagID].rotation.set(0,0,0);
-			 tags[currentTagID].position.set(0,0,1);
-			}
-			break;
+		
 		default:
   			break;
 
@@ -1089,7 +1086,6 @@ void GrafPlayerApp::setupControlPanel()
 	keypanel.addText("R: reset pos/rot","R");
 	keypanel.addText("s: save ALL tags","s");
 	keypanel.addText("S: save current tag","s");
-	keypanel.addText("z: reset tag pos/rot","z");
 	keypanel.addText("arrows: next/prev","arrows");
 	keypanel.addText("esc: quit","esc");
 	keypanel.addText("L mouse: alter position","lm");

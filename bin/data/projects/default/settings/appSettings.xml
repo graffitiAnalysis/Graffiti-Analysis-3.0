@@ -29,7 +29,7 @@
     <val_0>0.136111</val_0>
 </P_DAMP>
 <P_NUM>
-    <val_0>1.000000</val_0>
+    <val_0>2.466667</val_0>
 </P_NUM>
 <FOG_START>
     <val_0>333.333252</val_0>
@@ -137,7 +137,7 @@
     <val_0>0.410000</val_0>
 </box_friction>
 <use_audio>
-    <val_0>0.000000</val_0>
+    <val_0>1.000000</val_0>
 </use_audio>
 <use_arch>
     <val_0>0.000000</val_0>
